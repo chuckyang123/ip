@@ -1,4 +1,17 @@
 task
+mark 2
+delete 2
+deadline
+deadline borrowbook
+deadline /by 2
+deadline borrow /by 2 /by 2
+event
+event /from 3 /to 4
+event meeting /from 3
+event meeting /to 3
+event meeting /from 4 /to 5 /to 6
+event meeting /to 4 /from 2
+todo
 todo borrow book
 deadline return book /by 1900
 event project meeting /from Mon 2pm /to 4pm
@@ -6,5 +19,7 @@ list
 mark 2
 list
 unmark 2
+list
+delete 2
 list
 bye

@@ -1,26 +1,28 @@
-public class Task {
+class Task {
     protected String description;
-    protected boolean isDone;
+    protected Status status;
+    protected TaskType type;
 
-    public Task(String description) {
+    public Task(String description, TaskType type) {
         this.description = description;
-        this.isDone = false;
+        this.type = type;
+        this.status = Status.NOT_DONE;
     }
 
     public void markDone() {
-        this.isDone = true;
+        this.status = Status.DONE;
     }
 
     public void markUndone() {
-        this.isDone = false;
+        this.status = Status.NOT_DONE;
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return status.getIcon();
     }
 
     public String getTypeIcon() {
-        return " "; // base task type is empty
+        return type.getIcon();
     }
 
     @Override

@@ -1,6 +1,38 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+enum TaskType {
+    TODO("T"),
+    DEADLINE("D"),
+    EVENT("E");
+
+    private final String icon;
+
+    TaskType(String icon) {
+        this.icon = icon;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+}
+
+// Enum for task status
+enum Status {
+    NOT_DONE(" "),
+    DONE("X");
+
+    private final String icon;
+
+    Status(String icon) {
+        this.icon = icon;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+}
+
 public class Crisp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -99,6 +131,10 @@ public class Crisp {
 
                     if (fromIndex == -1 || toIndex == -1) {
                         throw new Exception("An event requires both /from and /to. Example: event meeting /from 2pm /to 4pm");
+                    }
+
+                    if (fromIndex > toIndex ) {
+                        throw new Exception("An event requires first /from then /to. Example: event meeting /from 2pm /to 4pm");
                     }
 
                     if (remaining.indexOf("/from", fromIndex + 1) != -1 || remaining.indexOf("/to", toIndex + 1) != -1) {
