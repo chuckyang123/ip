@@ -44,11 +44,48 @@ public class Crisp {
                 System.out.println("   " + tasks[taskNum]);
                 System.out.println("____________________________________________________________");
 
-            } else {
-                tasks[taskCount] = new Task(input);
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5);
+                Task newTask = new Todo(description);
+                tasks[taskCount] = newTask;
                 taskCount++;
                 System.out.println("____________________________________________________________");
-                System.out.println(" added: " + input);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + newTask);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+
+            } else if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ", 2);
+                String description = parts[0];
+                String by = parts.length > 1 ? parts[1] : "";
+                Task newTask = new Deadline(description, by);
+                tasks[taskCount] = newTask;
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + newTask);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+
+            } else if (input.startsWith("event ")) {
+                String[] parts = input.substring(6).split(" /from | /to ", 3);
+                // parts: [description, from, to]
+                String description = parts[0];
+                String from = parts.length > 1 ? parts[1] : "";
+                String to = parts.length > 2 ? parts[2] : "";
+                Task newTask = new Event(description, from, to);
+                tasks[taskCount] = newTask;
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + newTask);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+
+            } else {
+                System.out.println("____________________________________________________________");
+                System.out.println(" Oops! I don't understand that command.");
                 System.out.println("____________________________________________________________");
             }
         }
