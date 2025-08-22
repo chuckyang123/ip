@@ -21,12 +21,12 @@ public class Storage {
     }
 
     public List<Task> load() {
-        List<Task> tasks = new ArrayList<>();
+        List<Task> loadedTasks = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(filePath)) {
             String line;
             while ((line = br.readLine()) != null) {
                 try {
-                    tasks.add(parseTask(line));
+                    loadedTasks.add(parseTask(line));
                 } catch (Exception e) {
                     System.out.println("Skipped corrupted line: " + line);
                 }
@@ -34,12 +34,12 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("Failed to read tasks: " + e.getMessage());
         }
-        return tasks;
+        return loadedTasks;
     }
 
-    public void save(List<Task> tasks) {
+    public void save(TaskList taskList) {
         try (BufferedWriter bw = Files.newBufferedWriter(filePath)) {
-            for (Task task : tasks) {
+            for (Task task : taskList.getAll()) {
                 bw.write(task.toFileFormat());
                 bw.newLine();
             }

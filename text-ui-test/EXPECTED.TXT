@@ -3,13 +3,13 @@ ____________________________________________________________
  What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! I'm sorry, but I don't know what that means :-(
+ OOPS!!!  I'm sorry, but I don't know what that means :-(
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! No task in list now
+ OOPS!!! Index 1 out of bounds for length 0
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! No task in list now
+ OOPS!!! Index 1 out of bounds for length 0
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! The description of a deadline cannot be empty. Example: deadline submit report /by Sunday
@@ -42,8 +42,7 @@ ____________________________________________________________
  OOPS!!! An event requires first /from then /to. Example: event meeting /from 2pm /to 4pm
 ____________________________________________________________
 ____________________________________________________________
- Oops! You need to provide a description for your todo.
- Example: todo read book
+ OOPS!!!  Oops! You need to provide a description for your todo. Example: todo read book
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
@@ -51,51 +50,63 @@ ____________________________________________________________
  Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
+Here are the tasks in your list:
+1. [T][ ] borrow book
+____________________________________________________________
+____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: 1900)
+   [D][ ] return book (by: 12? 12 1900)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+   [E][ ] project meeting (from: 12? 12 1900 to: 12? 20 1900)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ] borrow book
- 2.[D][ ] return book (by: 1900)
- 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+Here are the tasks in your list:
+1. [T][ ] borrow book
+2. [D][ ] return book (by: 12? 12 1900)
+3. [E][ ] project meeting (from: 12? 12 1900 to: 12? 20 1900)
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] return book (by: 1900)
+   [D][X] return book (by: 12? 12 1900)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ] borrow book
- 2.[D][X] return book (by: 1900)
- 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+Here are the tasks in your list:
+1. [T][ ] borrow book
+2. [D][X] return book (by: 12? 12 1900)
+3. [E][ ] project meeting (from: 12? 12 1900 to: 12? 20 1900)
 ____________________________________________________________
 ____________________________________________________________
  OK, I've marked this task as not done yet:
-   [D][ ] return book (by: 1900)
+   [D][ ] return book (by: 12? 12 1900)
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ] borrow book
- 2.[D][ ] return book (by: 1900)
- 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+Here are the tasks in your list:
+1. [T][ ] borrow book
+2. [D][ ] return book (by: 12? 12 1900)
+3. [E][ ] project meeting (from: 12? 12 1900 to: 12? 20 1900)
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
-   [D][ ] return book (by: 1900)
+   [D][ ] return book (by: 12? 12 1900)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ] borrow book
- 2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+ Noted. I've removed this task:
+   [T][ ] borrow book
+ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- Bye. Hope to see you again soon!
+ Noted. I've removed this task:
+   [E][ ] project meeting (from: 12? 12 1900 to: 12? 20 1900)
+ Now you have 0 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
 ____________________________________________________________

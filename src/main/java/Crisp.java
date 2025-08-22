@@ -1,289 +1,37 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-enum TaskType {
-    TODO("T"),
-    DEADLINE("D"),
-    EVENT("E");
-
-    private final String icon;
-
-    TaskType(String icon) {
-        this.icon = icon;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-}
-
-// Enum for task status
-enum Status {
-    NOT_DONE(" "),
-    DONE("X");
-
-    private final String icon;
-
-    Status(String icon) {
-        this.icon = icon;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-}
-
 public class Crisp {
-    private static final Storage storage = new Storage("./data/crisp.txt");
-    private static ArrayList<Task> tasks = new ArrayList<>();
+    private Storage storage = new Storage("./data/crisp.txt");
+    private TaskList tasks;
+    private Ui ui = new Ui();
+
+    public Crisp() {
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (Exception e) {
+            ui.showError("Failed to load tasks. Starting with empty list.");
+            tasks = new TaskList();
+        }
+    }
+
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (Exception e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
+        ui.close();
+    }
+
     public static void main(String[] args) {
-        tasks = new ArrayList<>(storage.load());
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("____________________________________________________________");
-        System.out.println(" Hello! I'm Crisp");
-        System.out.println(" What can I do for you?");
-        System.out.println("____________________________________________________________");
-
-        while (true) {
-            String input = sc.nextLine().trim();
-
-            if (input.equals("bye")) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Bye. Hope to see you again soon!");
-                System.out.println("____________________________________________________________");
-                break;
-
-            } else if (input.equals("list")) {
-                System.out.println("____________________________________________________________");
-                System.out.println(" Here are the tasks in your list:");
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                }
-                System.out.println("____________________________________________________________");
-
-            } else if (input.startsWith("mark ")) {
-                handleMarkUnmark(tasks, input, true);
-                storage.save(tasks);
-
-            } else if (input.startsWith("unmark ")) {
-                handleMarkUnmark(tasks, input, false);
-                storage.save(tasks);
-
-            } else if (input.startsWith("delete ")) {
-                handleDelete(tasks, input);
-                storage.save(tasks);
-            } else if (input.startsWith("show ")) {
-                    String dateStr = input.substring(5).trim();
-                    try {
-                        // Parse date in yyyy-MM-dd format
-                        LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-                        System.out.println("____________________________________________________________");
-                        System.out.println(" Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":");
-
-                        boolean found = false;
-                        for (Task task : tasks) {
-                            if (task instanceof Deadline) {
-                                Deadline dl = (Deadline) task;
-                                if (dl.getBy().isEqual(queryDate)) {
-                                    System.out.println(" " + dl);
-                                    found = true;
-                                }
-                            } else if (task instanceof Event) {
-                                Event ev = (Event) task;
-                                if (!queryDate.isBefore(ev.getFrom()) && !queryDate.isAfter(ev.getTo())) {
-                                    System.out.println(" " + ev);
-                                    found = true;
-                                }
-                            }
-                        }
-
-                        if (!found) {
-                            System.out.println(" No tasks found on this date.");
-                        }
-
-                        System.out.println("____________________________________________________________");
-
-                    } catch (DateTimeParseException e) {
-                        System.out.println("____________________________________________________________");
-                        System.out.println(" OOPS!!! Invalid date format. Use yyyy-MM-dd. Example: 2019-12-02");
-                        System.out.println("____________________________________________________________");
-                    }
-            } else if (input.startsWith("todo")) {
-                Todohandle(input);
-            } else if (input.startsWith("deadline")) {
-                Deadlinehandle(input);
-            } else if (input.startsWith("event")) {
-                Eventhandle(input);
-            } else {
-                System.out.println("____________________________________________________________");
-                System.out.println(" OOPS!!! I'm sorry, but I don't know what that means :-(");
-                System.out.println("____________________________________________________________");
-            }
-        }
-        sc.close();
-    }
-
-    private static void Todohandle(String input) {
-        if (input.length() <= 5 || input.substring(5).trim().isEmpty()) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" Oops! You need to provide a description for your todo.");
-            System.out.println(" Example: todo read book");
-            System.out.println("____________________________________________________________");
-            return;
-        }
-        String description = input.substring(5).trim();
-        Task newTask = new Todo(description);
-        tasks.add(newTask);
-        printAddedTask(newTask, tasks.size());
-        storage.save(tasks);
-    }
-
-    private static void Eventhandle(String input) {
-        try {
-            if (input.length() <= 6) {
-                throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
-            }
-            String remaining = input.substring(6).trim();
-            // Check for /from and /to
-            int fromIndex = remaining.indexOf("/from ");
-            int toIndex = remaining.indexOf("/to ");
-
-            if (fromIndex == -1 || toIndex == -1) {
-                throw new Exception("An event requires both /from and /to. Example: event meeting /from 2pm /to 4pm");
-            }
-
-            if (fromIndex > toIndex ) {
-                throw new Exception("An event requires first /from then /to. Example: event meeting /from 2pm /to 4pm");
-            }
-
-            if (remaining.indexOf("/from", fromIndex + 1) != -1 || remaining.indexOf("/to", toIndex + 1) != -1) {
-                throw new Exception("Invalid event input: only one /from and one /to allowed.");
-            }
-
-            String description = remaining.substring(0, fromIndex).trim();
-            String from = remaining.substring(fromIndex + 6, toIndex).trim();
-            String to = remaining.substring(toIndex + 4).trim();
-
-            if (description.isEmpty()) {
-                throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
-            }
-            if (from.isEmpty() || to.isEmpty()) {
-                throw new Exception("The /from and /to times cannot be empty. Example: event meeting /from 2pm /to 4pm");
-            }
-
-            Task newTask = new Event(description, from, to);
-            tasks.add(newTask);
-            printAddedTask(newTask, tasks.size());
-            storage.save(tasks);
-        } catch (Exception e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" OOPS!!! " + e.getMessage());
-            System.out.println("____________________________________________________________");
-        }
-    }
-
-    private static void Deadlinehandle(String input) {
-        try {
-            if (input.length() <= 9) {
-                throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
-            }
-            String remaining = input.substring(9).trim();
-            // Check if /by exists
-            int byIndex = remaining.indexOf("/by ");
-            if (byIndex == -1) {
-                throw new Exception("A deadline requires a /by date/time. Example: deadline submit report /by Sunday");
-            }
-
-            String description = remaining.substring(0, byIndex).trim();
-            String by = remaining.substring(byIndex + 4).trim();
-
-            // Validate description and by
-            if (description.isEmpty()) {
-                throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
-            }
-            if (by.isEmpty()) {
-                throw new Exception("The /by date/time cannot be empty. Example: deadline submit report /by Sunday");
-            }
-
-            // Optional: check for multiple /by
-            if (by.contains("/by")) {
-                throw new Exception("Invalid deadline input: only one /by allowed.");
-            }
-
-            Task newTask = new Deadline(description, by);
-            tasks.add(newTask);
-            printAddedTask(newTask, tasks.size());
-            storage.save(tasks);
-        } catch (Exception e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" OOPS!!! " + e.getMessage());
-            System.out.println("____________________________________________________________");
-        }
-    }
-
-    private static void handleMarkUnmark(ArrayList<Task> tasks, String input, boolean mark) {
-        try {
-            int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
-            if (tasks.isEmpty()) {
-                throw new Exception("No task in list now");
-            }
-            if (num < 0 || num >= tasks.size()) {
-                throw new Exception("Task number " + (num + 1) + " does not exist. Please choose a number between 1 and " + tasks.size());
-            }
-            if (mark) tasks.get(num).markDone();
-            else tasks.get(num).markUndone();
-
-            System.out.println("____________________________________________________________");
-            System.out.println(mark ? " Nice! I've marked this task as done:" : " OK, I've marked this task as not done yet:");
-            System.out.println("   " + tasks.get(num));
-            System.out.println("____________________________________________________________");
-        } catch (NumberFormatException e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" OOPS!!! Please provide a valid task number.");
-            System.out.println("____________________________________________________________");
-        } catch (Exception e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" OOPS!!! " + e.getMessage());
-            System.out.println("____________________________________________________________");
-        }
-    }
-
-    private static void handleDelete(ArrayList<Task> tasks, String input) {
-        try {
-            int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
-            if (tasks.isEmpty()) {
-                throw new Exception("No task in list now");
-            }
-            if (num < 0 || num >= tasks.size()) {
-                throw new Exception("Task number " + (num + 1) + " does not exist. Please choose a number between 1 and " + tasks.size());
-            }
-            Task removed = tasks.remove(num);
-            System.out.println("____________________________________________________________");
-            System.out.println(" Noted. I've removed this task:");
-            System.out.println("   " + removed);
-            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-            System.out.println("____________________________________________________________");
-        } catch (NumberFormatException e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" OOPS!!! Please provide a valid task number.");
-            System.out.println("____________________________________________________________");
-        } catch (Exception e) {
-            System.out.println("____________________________________________________________");
-            System.out.println(" OOPS!!! " + e.getMessage());
-            System.out.println("____________________________________________________________");
-        }
-    }
-
-    private static void printAddedTask(Task task, int count) {
-        System.out.println("____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + count + " tasks in the list.");
-        System.out.println("____________________________________________________________");
+        new Crisp().run();
     }
 }

@@ -13,13 +13,16 @@ event meeting /from 4 /to 5 /to 6
 event meeting /to 4 /from 2
 todo
 todo borrow book
-deadline return book /by 1900
-event project meeting /from Mon 2pm /to 4pm
+list
+deadline return book /by 1900-12-12
+event project meeting /from 1900-12-12 /to 1900-12-20
 list
 mark 2
 list
 unmark 2
 list
 delete 2
+delete 1
+delete 1
 list
 bye
