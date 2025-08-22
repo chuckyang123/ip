@@ -1,7 +1,10 @@
 package Crisp.Command;
 
-import Crisp.Task.*;
-import Crisp.Util.*;
+import Crisp.Task.Task;
+import Crisp.Task.TaskList;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
+
 
 /**
  * Represents a command to delete a task from the TaskList.

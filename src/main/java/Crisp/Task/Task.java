@@ -88,12 +88,19 @@ public abstract class Task {
      */
     public abstract String toFileFormat();
 
+<<<<<<< HEAD
     /**
      * Returns a human-readable string representation of the task,
      * including its type icon, status icon, and description.
      *
      * @return a string representing the task
      */
+=======
+    public String getDescription() {
+        return description;
+    }
+
+>>>>>>> branch-A-CodingStandard
     @Override
     public String toString() {
         return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description;

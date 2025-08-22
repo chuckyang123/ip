@@ -4,6 +4,7 @@ import Crisp.Util.Storage;
 import Crisp.Util.Ui;
 import Crisp.Util.Parser;
 
+
 /**
  * The {@code Crisp} class represents the main application for the Crisp task manager.
  * It handles initialization of storage, tasks, and user interface, and runs the main
@@ -16,6 +17,7 @@ import Crisp.Util.Parser;
  *     }
  * </pre>
  */
+
 public class Crisp {
     private Storage storage = new Storage("./data/crisp.txt");
     private TaskList tasks;

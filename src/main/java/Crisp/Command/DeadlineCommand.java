@@ -1,14 +1,17 @@
 package Crisp.Command;
 
-import Crisp.Task.*;
-import Crisp.Util.*;
-
 /**
  * Represents a command to add a deadline task to the TaskList.
  * When executed, a new Deadline task is created from the given description and due date,
  * added to the TaskList, a confirmation message is shown to the user via the Ui,
  * and the updated list is saved to storage.
  */
+import Crisp.Task.Deadline;
+import Crisp.Task.Task;
+import Crisp.Task.TaskList;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
+
 public class DeadlineCommand extends Command {
     private final String description;
     private final String by;

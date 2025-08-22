@@ -1,15 +1,15 @@
 package Crisp.Command;
 
-import Crisp.Task.*;
-import Crisp.Util.*;
+import Crisp.Task.TaskList;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
 
 /**
  * Represents a command to list all tasks in the TaskList.
  * When executed, it prints all tasks with their indices to the user via the Ui.
  */
-public class ListCommand extends Command {
 
-    /**
+/**
      * Executes the list command.
      * Iterates through the TaskList and prints each task with its index.
      *
@@ -17,6 +17,7 @@ public class ListCommand extends Command {
      * @param ui      the Ui for printing messages
      * @param storage the Storage for persisting tasks (unused)
      */
+public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.showMessage("Here are the tasks in your list:");

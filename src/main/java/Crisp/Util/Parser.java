@@ -1,6 +1,16 @@
 package Crisp.Util;
 
-import Crisp.Command.*;
+import Crisp.Command.Command;
+import Crisp.Command.DeadlineCommand;
+import Crisp.Command.DeleteCommand;
+import Crisp.Command.EventCommand;
+import Crisp.Command.ExitCommand;
+import Crisp.Command.FindCommand;
+import Crisp.Command.ListCommand;
+import Crisp.Command.MarkCommand;
+import Crisp.Command.ShowCommand;
+import Crisp.Command.TodoCommand;
+import Crisp.Command.UnmarkCommand;
 
 /**
  * The {@code Parser} class is responsible for interpreting user input
@@ -39,6 +49,12 @@ public class Parser {
         } else if (input.startsWith("mark ")) {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new MarkCommand(num);
+        } else if (input.startsWith("find ")) {
+                String keyword = input.substring(5).trim();
+                if (keyword.isEmpty()) {
+                    throw new Exception("You must provide a keyword to search for. Example: find book");
+                }
+                return new FindCommand(keyword);
         } else if (input.startsWith("unmark ")) {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new UnmarkCommand(num);
