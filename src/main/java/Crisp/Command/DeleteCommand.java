@@ -1,6 +1,10 @@
 package Crisp.Command;
-import Crisp.Task.*;
-import Crisp.Util.*;
+
+import Crisp.Task.Task;
+import Crisp.Task.TaskList;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
+
 public class DeleteCommand  extends Command {
     private final int index; // index of task to delete (1-based)
 

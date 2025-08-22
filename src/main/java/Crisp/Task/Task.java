@@ -24,6 +24,10 @@ public abstract class Task {
 
     public abstract String toFileFormat();
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description;

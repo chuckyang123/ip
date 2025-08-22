@@ -1,6 +1,9 @@
 package Crisp.Command;
-import Crisp.Task.*;
-import Crisp.Util.*;
+
+import Crisp.Task.TaskList;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
+
 public class ExitCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {

@@ -1,6 +1,11 @@
 package Crisp.Command;
-import Crisp.Task.*;
-import Crisp.Util.*;
+
+import Crisp.Task.Deadline;
+import Crisp.Task.Task;
+import Crisp.Task.TaskList;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
+
 public class DeadlineCommand extends Command {
     private final String description;
     private final String by;
