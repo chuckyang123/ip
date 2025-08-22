@@ -1,8 +1,8 @@
 import Crisp.Command.Command;
 import Crisp.Task.TaskList;
-import Crisp.util.Storage;
-import Crisp.util.Ui;
-import Crisp.util.*;
+import Crisp.Util.Storage;
+import Crisp.Util.Ui;
+import Crisp.Util.Parser;
 public class Crisp {
     private Storage storage = new Storage("./data/crisp.txt");
     private TaskList tasks;

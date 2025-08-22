@@ -1,6 +1,6 @@
 package Crisp.Command;
 import Crisp.Task.*;
-import Crisp.util.*;
+import Crisp.Util.*;
 public class TodoCommand extends Command {
     private final String description;
 

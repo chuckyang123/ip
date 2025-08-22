@@ -8,10 +8,6 @@ public class Deadline extends Task {
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
-    public Deadline(String description, LocalDate by, Status status) {
-        super(description, TaskType.DEADLINE, status);
-        this.by = by;
-    }
 
     public Deadline(String description, String byStr) throws DateTimeParseException {
         super(description, TaskType.DEADLINE, Status.NOT_DONE);
@@ -26,6 +22,10 @@ public class Deadline extends Task {
     @Override
     public String toFileFormat() {
         return type.getIcon() + " | " + (status == Status.DONE ? "1" : "0") + " | " + description + " | " + by;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public LocalDate getBy() {

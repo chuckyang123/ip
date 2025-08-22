@@ -1,6 +1,6 @@
 package Crisp.Command;
 import Crisp.Task.*;
-import Crisp.util.*;
+import Crisp.Util.*;
 public class MarkCommand extends Command {
     private final int index;
 

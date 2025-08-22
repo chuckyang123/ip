@@ -1,6 +1,6 @@
 package Crisp.Command;
 import Crisp.Task.*;
-import Crisp.util.*;
+import Crisp.Util.*;
 public class EventCommand extends Command {
     private final String description;
     private final String from;

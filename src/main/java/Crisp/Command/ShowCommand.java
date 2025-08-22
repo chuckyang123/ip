@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import Crisp.Task.*;
-import Crisp.util.*;
+import Crisp.Util.*;
 public class ShowCommand extends Command {
     private final String dateStr;
 
@@ -16,7 +16,6 @@ public class ShowCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            ui.showLine();
             System.out.println(" Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":");
 
             boolean found = false;
@@ -33,7 +32,6 @@ public class ShowCommand extends Command {
             if (!found) {
                 System.out.println(" No tasks found on this date.");
             }
-            ui.showLine();
 
         } catch (DateTimeParseException e) {
             ui.showError("Invalid date format. Use yyyy-MM-dd. Example: 2019-12-02");
