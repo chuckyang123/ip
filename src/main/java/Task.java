@@ -1,4 +1,4 @@
-class Task {
+public abstract class Task {
     protected String description;
     protected Status status;
     protected TaskType type;
@@ -9,24 +9,21 @@ class Task {
         this.status = Status.NOT_DONE;
     }
 
-    public void markDone() {
-        this.status = Status.DONE;
+    public Task(String description, TaskType type, Status status) {
+        this.description = description;
+        this.type = type;
+        this.status = status;
     }
 
-    public void markUndone() {
-        this.status = Status.NOT_DONE;
-    }
+    public void markDone() { status = Status.DONE; }
+    public void markUndone() { status = Status.NOT_DONE; }
+    public Status getStatus() { return status; }
+    public TaskType getType() { return type; }
 
-    public String getStatusIcon() {
-        return status.getIcon();
-    }
-
-    public String getTypeIcon() {
-        return type.getIcon();
-    }
+    public abstract String toFileFormat();
 
     @Override
     public String toString() {
-        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description;
+        return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description;
     }
 }

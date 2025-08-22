@@ -34,9 +34,11 @@ enum Status {
 }
 
 public class Crisp {
+    private static final Storage storage = new Storage("./data/crisp.txt");
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static void main(String[] args) {
+        tasks = new ArrayList<>(storage.load());
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
 
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Crisp");
@@ -62,113 +64,127 @@ public class Crisp {
 
             } else if (input.startsWith("mark ")) {
                 handleMarkUnmark(tasks, input, true);
+                storage.save(tasks);
 
             } else if (input.startsWith("unmark ")) {
                 handleMarkUnmark(tasks, input, false);
+                storage.save(tasks);
 
             } else if (input.startsWith("delete ")) {
                 handleDelete(tasks, input);
+                storage.save(tasks);
 
             } else if (input.startsWith("todo")) {
-                if (input.length() <= 5 || input.substring(5).trim().isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Oops! You need to provide a description for your todo.");
-                    System.out.println(" Example: todo read book");
-                    System.out.println("____________________________________________________________");
-                    continue;
-                }
-                String description = input.substring(5).trim();
-                Task newTask = new Todo(description);
-                tasks.add(newTask);
-                printAddedTask(newTask, tasks.size());
-
+                Todohandle(input);
             } else if (input.startsWith("deadline")) {
-                try {
-                    if (input.length() <= 9) {
-                        throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
-                    }
-                    String remaining = input.substring(9).trim();
-                    // Check if /by exists
-                    int byIndex = remaining.indexOf("/by ");
-                    if (byIndex == -1) {
-                        throw new Exception("A deadline requires a /by date/time. Example: deadline submit report /by Sunday");
-                    }
-
-                    String description = remaining.substring(0, byIndex).trim();
-                    String by = remaining.substring(byIndex + 4).trim();
-
-                    // Validate description and by
-                    if (description.isEmpty()) {
-                        throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
-                    }
-                    if (by.isEmpty()) {
-                        throw new Exception("The /by date/time cannot be empty. Example: deadline submit report /by Sunday");
-                    }
-
-                    // Optional: check for multiple /by
-                    if (by.contains("/by")) {
-                        throw new Exception("Invalid deadline input: only one /by allowed.");
-                    }
-
-                    Task newTask = new Deadline(description, by);
-                    tasks.add(newTask);
-                    printAddedTask(newTask, tasks.size());
-
-                } catch (Exception e) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" OOPS!!! " + e.getMessage());
-                    System.out.println("____________________________________________________________");
-                }
+                Deadlinehandle(input);
             } else if (input.startsWith("event")) {
-                try {
-                    if (input.length() <= 6) {
-                        throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
-                    }
-                    String remaining = input.substring(6).trim();
-                    // Check for /from and /to
-                    int fromIndex = remaining.indexOf("/from ");
-                    int toIndex = remaining.indexOf("/to ");
-
-                    if (fromIndex == -1 || toIndex == -1) {
-                        throw new Exception("An event requires both /from and /to. Example: event meeting /from 2pm /to 4pm");
-                    }
-
-                    if (fromIndex > toIndex ) {
-                        throw new Exception("An event requires first /from then /to. Example: event meeting /from 2pm /to 4pm");
-                    }
-
-                    if (remaining.indexOf("/from", fromIndex + 1) != -1 || remaining.indexOf("/to", toIndex + 1) != -1) {
-                        throw new Exception("Invalid event input: only one /from and one /to allowed.");
-                    }
-
-                    String description = remaining.substring(0, fromIndex).trim();
-                    String from = remaining.substring(fromIndex + 6, toIndex).trim();
-                    String to = remaining.substring(toIndex + 4).trim();
-
-                    if (description.isEmpty()) {
-                        throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
-                    }
-                    if (from.isEmpty() || to.isEmpty()) {
-                        throw new Exception("The /from and /to times cannot be empty. Example: event meeting /from 2pm /to 4pm");
-                    }
-
-                    Task newTask = new Event(description, from, to);
-                    tasks.add(newTask);
-                    printAddedTask(newTask, tasks.size());
-
-                } catch (Exception e) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" OOPS!!! " + e.getMessage());
-                    System.out.println("____________________________________________________________");
-                }
+                Eventhandle(input);
             } else {
                 System.out.println("____________________________________________________________");
                 System.out.println(" OOPS!!! I'm sorry, but I don't know what that means :-(");
                 System.out.println("____________________________________________________________");
             }
         }
-
         sc.close();
+    }
+
+    private static void Todohandle(String input) {
+        if (input.length() <= 5 || input.substring(5).trim().isEmpty()) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" Oops! You need to provide a description for your todo.");
+            System.out.println(" Example: todo read book");
+            System.out.println("____________________________________________________________");
+            return;
+        }
+        String description = input.substring(5).trim();
+        Task newTask = new Todo(description);
+        tasks.add(newTask);
+        printAddedTask(newTask, tasks.size());
+        storage.save(tasks);
+    }
+
+    private static void Eventhandle(String input) {
+        try {
+            if (input.length() <= 6) {
+                throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
+            }
+            String remaining = input.substring(6).trim();
+            // Check for /from and /to
+            int fromIndex = remaining.indexOf("/from ");
+            int toIndex = remaining.indexOf("/to ");
+
+            if (fromIndex == -1 || toIndex == -1) {
+                throw new Exception("An event requires both /from and /to. Example: event meeting /from 2pm /to 4pm");
+            }
+
+            if (fromIndex > toIndex ) {
+                throw new Exception("An event requires first /from then /to. Example: event meeting /from 2pm /to 4pm");
+            }
+
+            if (remaining.indexOf("/from", fromIndex + 1) != -1 || remaining.indexOf("/to", toIndex + 1) != -1) {
+                throw new Exception("Invalid event input: only one /from and one /to allowed.");
+            }
+
+            String description = remaining.substring(0, fromIndex).trim();
+            String from = remaining.substring(fromIndex + 6, toIndex).trim();
+            String to = remaining.substring(toIndex + 4).trim();
+
+            if (description.isEmpty()) {
+                throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
+            }
+            if (from.isEmpty() || to.isEmpty()) {
+                throw new Exception("The /from and /to times cannot be empty. Example: event meeting /from 2pm /to 4pm");
+            }
+
+            Task newTask = new Event(description, from, to);
+            tasks.add(newTask);
+            printAddedTask(newTask, tasks.size());
+            storage.save(tasks);
+        } catch (Exception e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" OOPS!!! " + e.getMessage());
+            System.out.println("____________________________________________________________");
+        }
+    }
+
+    private static void Deadlinehandle(String input) {
+        try {
+            if (input.length() <= 9) {
+                throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
+            }
+            String remaining = input.substring(9).trim();
+            // Check if /by exists
+            int byIndex = remaining.indexOf("/by ");
+            if (byIndex == -1) {
+                throw new Exception("A deadline requires a /by date/time. Example: deadline submit report /by Sunday");
+            }
+
+            String description = remaining.substring(0, byIndex).trim();
+            String by = remaining.substring(byIndex + 4).trim();
+
+            // Validate description and by
+            if (description.isEmpty()) {
+                throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
+            }
+            if (by.isEmpty()) {
+                throw new Exception("The /by date/time cannot be empty. Example: deadline submit report /by Sunday");
+            }
+
+            // Optional: check for multiple /by
+            if (by.contains("/by")) {
+                throw new Exception("Invalid deadline input: only one /by allowed.");
+            }
+
+            Task newTask = new Deadline(description, by);
+            tasks.add(newTask);
+            printAddedTask(newTask, tasks.size());
+            storage.save(tasks);
+        } catch (Exception e) {
+            System.out.println("____________________________________________________________");
+            System.out.println(" OOPS!!! " + e.getMessage());
+            System.out.println("____________________________________________________________");
+        }
     }
 
     private static void handleMarkUnmark(ArrayList<Task> tasks, String input, boolean mark) {
