@@ -6,3 +6,5 @@ The time is saved at least 1.5h with helping of AI
 But the problem is for like tests and error handing you need to do it yourself to get everything tested  and every case considered
 When encountering some cases the AI can not help debugging for text errors and some small error ike space can not be detected, you need to find out yourself and you
 may need think on your own in string finding need include space or not. With AI it  is a more design work not duplicate working.
+
+Sometimes may need more precise command to make the AI work ideally. Moreover, the changing of OOP for example need more human practice as the AI often miss one or two parts of the code when rewriting.
