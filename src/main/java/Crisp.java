@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -73,7 +76,43 @@ public class Crisp {
             } else if (input.startsWith("delete ")) {
                 handleDelete(tasks, input);
                 storage.save(tasks);
+            } else if (input.startsWith("show ")) {
+                    String dateStr = input.substring(5).trim();
+                    try {
+                        // Parse date in yyyy-MM-dd format
+                        LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":");
+
+                        boolean found = false;
+                        for (Task task : tasks) {
+                            if (task instanceof Deadline) {
+                                Deadline dl = (Deadline) task;
+                                if (dl.getBy().isEqual(queryDate)) {
+                                    System.out.println(" " + dl);
+                                    found = true;
+                                }
+                            } else if (task instanceof Event) {
+                                Event ev = (Event) task;
+                                if (!queryDate.isBefore(ev.getFrom()) && !queryDate.isAfter(ev.getTo())) {
+                                    System.out.println(" " + ev);
+                                    found = true;
+                                }
+                            }
+                        }
+
+                        if (!found) {
+                            System.out.println(" No tasks found on this date.");
+                        }
+
+                        System.out.println("____________________________________________________________");
+
+                    } catch (DateTimeParseException e) {
+                        System.out.println("____________________________________________________________");
+                        System.out.println(" OOPS!!! Invalid date format. Use yyyy-MM-dd. Example: 2019-12-02");
+                        System.out.println("____________________________________________________________");
+                    }
             } else if (input.startsWith("todo")) {
                 Todohandle(input);
             } else if (input.startsWith("deadline")) {
