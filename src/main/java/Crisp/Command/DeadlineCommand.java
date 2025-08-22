@@ -1,17 +1,18 @@
-public class EventCommand extends Command {
+package Crisp.Command;
+import Crisp.Task.*;
+import Crisp.util.*;
+public class DeadlineCommand extends Command {
     private final String description;
-    private final String from;
-    private final String to;
+    private final String by;
 
-    public EventCommand(String description, String from, String to) {
+    public DeadlineCommand(String description, String by) {
         this.description = description;
-        this.from = from;
-        this.to = to;
+        this.by = by;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Task newTask = new Event(description, from, to);
+        Task newTask = new Deadline(description, by);
         tasks.add(newTask);
         ui.showAddedTask(newTask, tasks.size());
         storage.save(tasks);
@@ -22,4 +23,5 @@ public class EventCommand extends Command {
         return false;
     }
 }
+
 

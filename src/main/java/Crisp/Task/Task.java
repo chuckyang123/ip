@@ -1,3 +1,5 @@
+package Crisp.Task;
+
 public abstract class Task {
     protected String description;
     protected Status status;

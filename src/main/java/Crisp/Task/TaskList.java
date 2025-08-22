@@ -1,38 +1,9 @@
+package Crisp.Task;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-enum TaskType {
-    TODO("T"),
-    DEADLINE("D"),
-    EVENT("E");
-
-    private final String icon;
-
-    TaskType(String icon) {
-        this.icon = icon;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-}
-
-// Enum for task status
-enum Status {
-    NOT_DONE(" "),
-    DONE("X");
-
-    private final String icon;
-
-    Status(String icon) {
-        this.icon = icon;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-}
 
 public class TaskList {
     private final List<Task> tasks;
