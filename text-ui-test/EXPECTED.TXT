@@ -3,7 +3,7 @@ ____________________________________________________________
  What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!!  I'm sorry, but I don't know what that means :-(
+ OOPS!!! I'm sorry, but I don't know what that means :-(
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! Index 1 out of bounds for length 0
@@ -18,7 +18,7 @@ ____________________________________________________________
  OOPS!!! A deadline requires a /by date/time. Example: deadline submit report /by Sunday
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The description of a deadline cannot be empty. Example: deadline submit report /by Sunday
+ OOPS!!! Invalid deadline input. Ensure both description and /by date are provided.
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! Invalid deadline input: only one /by allowed.
@@ -27,22 +27,22 @@ ____________________________________________________________
  OOPS!!! The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm
+ OOPS!!! Invalid event input. Description, /from, and /to cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event requires both /from and /to. Example: event meeting /from 2pm /to 4pm
+ OOPS!!! Invalid event input. Ensure /from comes before /to and both are present.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event requires both /from and /to. Example: event meeting /from 2pm /to 4pm
+ OOPS!!! Invalid event input. Ensure /from comes before /to and both are present.
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! Invalid event input: only one /from and one /to allowed.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!! An event requires first /from then /to. Example: event meeting /from 2pm /to 4pm
+ OOPS!!! Invalid event input. Ensure /from comes before /to and both are present.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!!!  Oops! You need to provide a description for your todo. Example: todo read book
+ OOPS!!! Oops! You need to provide a description for your todo. Example: todo read book
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:

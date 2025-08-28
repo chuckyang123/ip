@@ -94,8 +94,11 @@ public class Parser {
             String remaining = input.substring(6).trim();
             int fromIndex = remaining.indexOf("/from ");
             int toIndex = remaining.indexOf("/to ");
-            if (fromIndex == -1 || toIndex == -1 || fromIndex > toIndex) {
-                throw new Exception("Invalid event input. Ensure /from comes before /to and both are present.");
+            if (fromIndex == -1 || toIndex == -1 ) {
+                throw new Exception("Invalid event input. Ensure have both /from and /to are provided.");
+            }
+            if (fromIndex > toIndex) {
+                throw new Exception("Invalid event input. Ensure /from comes before /to.");
             }
             if (remaining.indexOf("/from", fromIndex + 1) != -1 || remaining.indexOf("/to", toIndex + 1) != -1) {
                 throw new Exception("Invalid event input: only one /from and one /to allowed.");
