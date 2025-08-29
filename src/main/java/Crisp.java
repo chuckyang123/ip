@@ -1,15 +1,15 @@
-import Crisp.Command.Command;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
-import Crisp.Util.Parser;
+import crisp.command.Command;
+import crisp.task.TaskList;
+import crisp.util.Parser;
+import crisp.util.Storage;
+import crisp.util.Ui;
+
 
 
 /**
  * The {@code Crisp} class represents the main application for the Crisp task manager.
  * It handles initialization of storage, tasks, and user interface, and runs the main
  * event loop to process user commands.
- * 
  * <p>Example usage:
  * <pre>
  *     public static void main(String[] args) {
