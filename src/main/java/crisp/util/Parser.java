@@ -1,16 +1,16 @@
-package crisp.util;
+package Crisp.Util;
 
-import crisp.command.Command;
-import crisp.command.DeadlineCommand;
-import crisp.command.DeleteCommand;
-import crisp.command.EventCommand;
-import crisp.command.ExitCommand;
-import crisp.command.FindCommand;
-import crisp.command.ListCommand;
-import crisp.command.MarkCommand;
-import crisp.command.ShowCommand;
-import crisp.command.TodoCommand;
-import crisp.command.UnmarkCommand;
+import Crisp.Command.Command;
+import Crisp.Command.DeadlineCommand;
+import Crisp.Command.DeleteCommand;
+import Crisp.Command.EventCommand;
+import Crisp.Command.ExitCommand;
+import Crisp.Command.ListCommand;
+import Crisp.Command.MarkCommand;
+import Crisp.Command.SearchCommand;
+import Crisp.Command.ShowCommand;
+import Crisp.Command.TodoCommand;
+import Crisp.Command.UnmarkCommand;
 
 /**
  * The {@code Parser} class is responsible for interpreting user input
@@ -49,12 +49,13 @@ public class Parser {
         } else if (input.startsWith("mark ")) {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new MarkCommand(num);
-        } else if (input.startsWith("find ")) {
-            String keyword = input.substring(5).trim();
-            if (keyword.isEmpty()) {
-                throw new Exception("You must provide a keyword to search for. Example: find book");
+        } else if (input.startsWith("search ")) {
+            String arguments = input.substring(7).trim(); // get the text after "search"
+            if (arguments.isEmpty()) {
+                throw new Exception("You must provide at least one keyword. Example: search book");
             }
-            return new FindCommand(keyword);
+            String[] keywords = arguments.split("\\s+"); // split by whitespace
+            return new SearchCommand(keywords);
         } else if (input.startsWith("unmark ")) {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new UnmarkCommand(num);
@@ -71,8 +72,7 @@ public class Parser {
             return new TodoCommand(description);
         } else if (input.startsWith("deadline")) {
             if (input.length() <= 9) {
-                throw new Exception(
-                        "The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
+                throw new Exception("The description of a deadline cannot be empty. Example: deadline submit report /by Sunday");
             }
             String remaining = input.substring(9).trim();
             int byIndex = remaining.indexOf("/by ");
@@ -90,13 +90,12 @@ public class Parser {
             return new DeadlineCommand(description, by);
         } else if (input.startsWith("event")) {
             if (input.length() <= 6) {
-                throw new Exception(
-                        "The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
+                throw new Exception("The description of an event cannot be empty. Example: event meeting /from 2pm /to 4pm");
             }
             String remaining = input.substring(6).trim();
             int fromIndex = remaining.indexOf("/from ");
             int toIndex = remaining.indexOf("/to ");
-            if (fromIndex == -1 || toIndex == -1) {
+            if (fromIndex == -1 || toIndex == -1 ) {
                 throw new Exception("Invalid event input. Ensure have both /from and /to are provided.");
             }
             if (fromIndex > toIndex) {
