@@ -1,11 +1,12 @@
-package Crisp.Task;
+package crisp.task;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class DeadlineTest {
 
@@ -42,7 +43,7 @@ public class DeadlineTest {
     @Test
     public void testInvalidDateThrows() {
         // Clearly invalid strings to ensure DateTimeParseException
-        assertThrows(DateTimeParseException.class,
-                () -> new Deadline("Invalid Deadline", "not-a-date"));
+        assertThrows(DateTimeParseException.class, (
+        ) -> new Deadline("Invalid Deadline", "not-a-date"));
     }
 }

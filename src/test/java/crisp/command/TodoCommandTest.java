@@ -1,8 +1,8 @@
-package Crisp.Command;
-
-import org.junit.jupiter.api.Test;
+package crisp.command;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
 
 public class TodoCommandTest {
 

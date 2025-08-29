@@ -1,8 +1,8 @@
-package Crisp.Command;
-
-import org.junit.jupiter.api.Test;
+package crisp.command;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 public class ExitCommandTest {
 

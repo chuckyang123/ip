@@ -1,10 +1,10 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.Event;
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.Event;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 /**
  * Represents a command to add an event task to the TaskList.
  * When executed, a new Event task is created from the given description, start date, and end date,

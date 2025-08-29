@@ -1,9 +1,9 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 
 /**

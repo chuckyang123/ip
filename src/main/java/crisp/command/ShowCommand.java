@@ -1,19 +1,18 @@
-package Crisp.Command;
+package crisp.command;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import Crisp.Task.Deadline;
-import Crisp.Task.Event;
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.Deadline;
+import crisp.task.Event;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 /**
  * Represents a command to display all tasks occurring on a specific date.
  * The date is provided as a string in the format "yyyy-MM-dd".
- * 
  * When executed, this command lists all Deadline and Event tasks
  * that match the specified date and prints them to the console.
  * If the date format is invalid, an error message is displayed via Ui.
@@ -47,14 +46,16 @@ public class ShowCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            System.out.println(" Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":");
+            System.out.println(" Tasks occurring on "
+                    + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":");
 
             boolean found = false;
             for (Task task : tasks.getAll()) {
                 if (task instanceof Deadline dl && dl.getBy().isEqual(queryDate)) {
                     System.out.println(" " + dl);
                     found = true;
-                } else if (task instanceof Event ev && !queryDate.isBefore(ev.getFrom()) && !queryDate.isAfter(ev.getTo())) {
+                } else if (task instanceof Event ev && !queryDate.isBefore(ev.getFrom())
+                        && !queryDate.isAfter(ev.getTo())) {
                     System.out.println(" " + ev);
                     found = true;
                 }

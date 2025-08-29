@@ -1,4 +1,10 @@
-package Crisp.Command;
+package crisp.command;
+
+import crisp.task.Deadline;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 /**
  * Represents a command to add a deadline task to the TaskList.
@@ -6,12 +12,6 @@ package Crisp.Command;
  * added to the TaskList, a confirmation message is shown to the user via the Ui,
  * and the updated list is saved to storage.
  */
-import Crisp.Task.Deadline;
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
-
 public class DeadlineCommand extends Command {
     private final String description;
     private final String by;

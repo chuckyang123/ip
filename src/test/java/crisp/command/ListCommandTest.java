@@ -1,21 +1,23 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Task.Todo;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import crisp.task.TaskList;
+import crisp.task.Todo;
+import crisp.util.Storage;
+import crisp.util.Ui;
+
 
 public class ListCommandTest {
 
     // Custom Ui class for testing
     static class TestUi extends Ui {
+        @SuppressWarnings("checkstyle:VisibilityModifier")
         List<String> messages = new ArrayList<>();
 
         @Override

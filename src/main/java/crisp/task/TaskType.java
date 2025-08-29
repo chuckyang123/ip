@@ -1,8 +1,7 @@
-package Crisp.Task;
+package crisp.task;
 
 /**
  * Represents the type of a task.
- * 
  * Each task type has a corresponding icon that can be used
  * for display or file storage purposes.
  */
@@ -21,7 +20,6 @@ public enum TaskType {
 
     /**
      * Constructs a TaskType with the given icon.
-     * 
      * @param icon the string representation of the task type
      */
     TaskType(String icon) {
@@ -30,7 +28,6 @@ public enum TaskType {
 
     /**
      * Returns the icon representing the task type.
-     * 
      * @return the task type icon as a string
      */
     public String getIcon() {

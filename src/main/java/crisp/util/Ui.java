@@ -1,7 +1,9 @@
-package Crisp.Util;
+package crisp.util;
 
-import Crisp.Task.Task;
 import java.util.Scanner;
+
+import crisp.task.Task;
+
 
 /**
  * The {@code Ui} class handles all user interactions in the Crisp application.

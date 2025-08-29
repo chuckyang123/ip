@@ -1,13 +1,13 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 /**
  * Represents a command to mark a task as done in the TaskList.
- * When executed, it updates the task's status, displays a message via Ui, 
+ * When executed, it updates the task's status, displays a message via Ui,
  * and saves the updated TaskList to Storage.
  */
 

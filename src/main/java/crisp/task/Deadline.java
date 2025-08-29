@@ -1,4 +1,4 @@
-package Crisp.Task;
+package crisp.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -6,20 +6,18 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Represents a task with a specific deadline date.
- * 
  * A Deadline task has a description, a due date, and a status indicating
  * whether it is done or not.
  */
 public class Deadline extends Task {
-
-    /** The due date of the deadline task. */
-    private LocalDate by;
-
     /** Input date format used to parse date strings. */
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /** Output date format used for displaying the deadline. */
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+
+    /** The due date of the deadline task. */
+    private LocalDate by;
 
     /**
      * Constructs a Deadline task with the specified description and due date.
@@ -82,7 +80,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description +
-                " (by: " + by.format(OUTPUT_FORMAT) + ")";
+        return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description
+                + " (by: " + by.format(OUTPUT_FORMAT) + ")";
     }
 }

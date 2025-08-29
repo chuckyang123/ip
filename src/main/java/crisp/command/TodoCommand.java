@@ -1,14 +1,13 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Task.Todo;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.task.Todo;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 /**
  * Represents a command to add a Todo task to the task list.
- * 
  * When executed, this command creates a new Todo task with the given description,
  * adds it to the TaskList, displays a confirmation message via Ui, and saves
  * the updated task list using Storage.
@@ -36,7 +35,7 @@ public class TodoCommand extends Command {
      * @param storage the Storage used to save the updated task list
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage ) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new Todo(description);
         tasks.add(newTask);
         ui.showAddedTask(newTask, tasks.size());

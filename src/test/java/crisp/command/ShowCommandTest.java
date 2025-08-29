@@ -1,24 +1,25 @@
-package Crisp.Command;
-
-import Crisp.Task.Deadline;
-import Crisp.Task.Event;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.time.LocalDate;
+package crisp.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.jupiter.api.Test;
+
+import crisp.task.Deadline;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 public class ShowCommandTest {
 
     // Custom Ui class for testing
     static class TestUi extends Ui {
+        @SuppressWarnings("checkstyle:VisibilityModifier")
         boolean lineShown = false;
+        @SuppressWarnings("checkstyle:VisibilityModifier")
         String errorMessage = null;
 
         @Override
@@ -57,7 +58,7 @@ public class ShowCommandTest {
         // Assert
         String output = outContent.toString();
         String normalized = output.replaceAll("\\s+", " ").trim();
-        assertEquals("Tasks occurring on 8月 25 2025: [D][ ] Submit report (by: 8月 25 2025)",normalized);
+        assertEquals("Tasks occurring on 8月 25 2025: [D][ ] Submit report (by: 8月 25 2025)", normalized);
 
     }
 

@@ -1,8 +1,7 @@
-package Crisp.Task;
+package crisp.task;
 
 /**
  * Represents the completion status of a task.
- * 
  * A task can either be NOT_DONE or DONE. Each status has an associated
  * icon for display purposes: a space " " for NOT_DONE and "X" for DONE.
  */

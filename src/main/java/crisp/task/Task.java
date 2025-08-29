@@ -1,8 +1,7 @@
-package Crisp.Task;
+package crisp.task;
 
 /**
  * Represents a generic task with a description, type, and status.
- * 
  * This is an abstract base class for specific types of tasks such as
  * {@link Deadline}, {@link Event}, and {@link Todo}. Each task has:
  * <ul>

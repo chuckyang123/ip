@@ -1,4 +1,4 @@
-package Crisp.Task;
+package crisp.task;
 
 /**
  * Represents a simple "to-do" task without a specific deadline or event duration.

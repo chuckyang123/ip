@@ -1,12 +1,14 @@
-package Crisp.Task;
+package crisp.task;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TaskListTest {
 
@@ -65,7 +67,7 @@ public class TaskListTest {
 
     @Test
     public void testGetTasksOnDateEvent() {
-        Event event = new Event("Conference","2025-08-24", "2025-08-26");
+        Event event = new Event("Conference", "2025-08-24", "2025-08-26");
         taskList.add(event);
 
         List<Task> tasksOn25 = taskList.getTasksOnDate(LocalDate.of(2025, 8, 25));

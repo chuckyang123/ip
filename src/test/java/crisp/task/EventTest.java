@@ -1,11 +1,11 @@
-package Crisp.Task;
-
-import org.junit.jupiter.api.Test;
+package crisp.task;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class EventTest {
 
@@ -43,9 +43,9 @@ public class EventTest {
 
     @Test
     public void testInvalidDateThrows() {
-        assertThrows(DateTimeParseException.class,
-                () -> new Event("Invalid Event", "notadate", "2025-08-26"));
-        assertThrows(DateTimeParseException.class,
-                () -> new Event("Invalid Event", "2025-08-01", "notadate"));
+        assertThrows(DateTimeParseException.class, (
+        ) -> new Event("Invalid Event", "notadate", "2025-08-26"));
+        assertThrows(DateTimeParseException.class, (
+        ) -> new Event("Invalid Event", "2025-08-01", "notadate"));
     }
 }

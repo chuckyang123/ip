@@ -1,9 +1,17 @@
-package Crisp.Util;
+package crisp.util;
 
-import Crisp.Command.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import crisp.command.Command;
+import crisp.command.DeadlineCommand;
+import crisp.command.EventCommand;
+import crisp.command.ExitCommand;
+import crisp.command.ListCommand;
+import crisp.command.ShowCommand;
+import crisp.command.TodoCommand;
 
 public class ParserTest {
 

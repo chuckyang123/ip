@@ -1,11 +1,4 @@
-package Crisp.Util;
-
-import Crisp.Task.TaskList;
-import Crisp.Task.Task;
-import Crisp.Task.Todo;
-import Crisp.Task.Deadline;
-import Crisp.Task.Event;
-import Crisp.Task.Status;
+package crisp.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,6 +8,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import crisp.task.Deadline;
+import crisp.task.Event;
+import crisp.task.Status;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.task.Todo;
 
 /**
  * The {@code Storage} class handles reading from and writing to the file
@@ -100,10 +100,10 @@ public class Storage {
         String[] parts = line.split(" \\| ");
         Status status = parts[1].equals("1") ? Status.DONE : Status.NOT_DONE;
         switch (parts[0]) {
-            case "T": return new Todo(parts[2], status);
-            case "D": return new Deadline(parts[2], parts[3], status);
-            case "E": return new Event(parts[2], parts[3], parts[4], status);
-            default: throw new IllegalArgumentException("Unknown task type: " + parts[0]);
+        case "T": return new Todo(parts[2], status);
+        case "D": return new Deadline(parts[2], parts[3], status);
+        case "E": return new Event(parts[2], parts[3], parts[4], status);
+        default: throw new IllegalArgumentException("Unknown task type: " + parts[0]);
         }
     }
 }

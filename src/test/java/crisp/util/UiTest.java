@@ -1,16 +1,19 @@
-package Crisp.Util;
+package crisp.util;
 
-import Crisp.Task.Deadline;
-import Crisp.Task.Status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.time.LocalDate;
+import crisp.task.Deadline;
+import crisp.task.Status;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 public class UiTest {
 

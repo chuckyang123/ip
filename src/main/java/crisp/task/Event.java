@@ -1,4 +1,4 @@
-package Crisp.Task;
+package crisp.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -6,23 +6,21 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Represents a task that occurs over a specific date range.
- * 
  * An Event task has a description, a start date, an end date, and a status
  * indicating whether it is done or not.
  */
 public class Event extends Task {
+    /** Input date format used to parse date strings. */
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    /** Output date format used for displaying the event dates. */
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /** The start date of the event. */
     private LocalDate from;
 
     /** The end date of the event. */
     private LocalDate to;
-
-    /** Input date format used to parse date strings. */
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    /** Output date format used for displaying the event dates. */
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /**
      * Constructs an Event task with the specified description, start date, and end date.
@@ -88,8 +86,8 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description +
-                " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
+        return "[" + type.getIcon() + "][" + status.getIcon() + "] " + description
+               + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
     }
 
     /**
@@ -98,7 +96,7 @@ public class Event extends Task {
      * @return formatted string for file storage
      */
     public String toFileFormat() {
-        return type.getIcon() + " | " + (status == Status.DONE ? "1" : "0") + " | " + description +
-                " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
+        return type.getIcon() + " | " + (status == Status.DONE ? "1" : "0") + " | " + description
+               + " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
     }
 }

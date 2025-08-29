@@ -1,8 +1,8 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 /**
  * Represents a command to exit the application.
  * When executed, it shows a farewell message to the user.

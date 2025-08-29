@@ -1,15 +1,14 @@
-package Crisp.Command;
+package crisp.command;
+
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 /**
  * Represents a generic command in the Crisp application.
  * All specific commands (e.g., AddCommand, DeleteCommand) extend this class.
  * Each command can be executed on a TaskList with a Ui and Storage.
  */
-
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
-
 public abstract class Command {
 
     /**

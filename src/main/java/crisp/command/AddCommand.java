@@ -1,9 +1,9 @@
-package Crisp.Command;
+package crisp.command;
 
-import Crisp.Task.Task;
-import Crisp.Task.TaskList;
-import Crisp.Util.Storage;
-import Crisp.Util.Ui;
+import crisp.task.Task;
+import crisp.task.TaskList;
+import crisp.util.Storage;
+import crisp.util.Ui;
 
 /**
  * Represents a command to add a task to the TaskList.
@@ -35,8 +35,8 @@ public class AddCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.add(task);
-        ui.showMessage("Got it. I've added this task:\n   " + task +
-                       "\nNow you have " + tasks.size() + " tasks in the list.");
+        ui.showMessage("Got it. I've added this task:\n   " + task
+                + "\nNow you have " + tasks.size() + " tasks in the list.");
         storage.save(tasks);
     }
 }
