@@ -5,9 +5,9 @@ import Crisp.Command.DeadlineCommand;
 import Crisp.Command.DeleteCommand;
 import Crisp.Command.EventCommand;
 import Crisp.Command.ExitCommand;
-import Crisp.Command.FindCommand;
 import Crisp.Command.ListCommand;
 import Crisp.Command.MarkCommand;
+import Crisp.Command.SearchCommand;
 import Crisp.Command.ShowCommand;
 import Crisp.Command.TodoCommand;
 import Crisp.Command.UnmarkCommand;
@@ -49,12 +49,13 @@ public class Parser {
         } else if (input.startsWith("mark ")) {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new MarkCommand(num);
-        } else if (input.startsWith("find ")) {
-                String keyword = input.substring(5).trim();
-                if (keyword.isEmpty()) {
-                    throw new Exception("You must provide a keyword to search for. Example: find book");
-                }
-                return new FindCommand(keyword);
+        } else if (input.startsWith("search ")) {
+            String arguments = input.substring(7).trim(); // get the text after "search"
+            if (arguments.isEmpty()) {
+                throw new Exception("You must provide at least one keyword. Example: search book");
+            }
+            String[] keywords = arguments.split("\\s+"); // split by whitespace
+            return new SearchCommand(keywords);
         } else if (input.startsWith("unmark ")) {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new UnmarkCommand(num);
