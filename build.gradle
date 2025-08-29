@@ -1,4 +1,5 @@
 plugins {
+    id 'checkstyle'
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -30,6 +31,15 @@ test {
 application {
     mainClass.set("seedu.duke.Duke")
 }
+
+checkstyle {
+    toolVersion = '11.0.0'  // Or whichever version you need
+    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
+    configProperties = [
+            'checkstyle.suppressions.file': file("$rootDir/config/checkstyle/suppressions.xml").absolutePath
+    ]
+}
+
 
 shadowJar {
     archiveBaseName = "duke"
