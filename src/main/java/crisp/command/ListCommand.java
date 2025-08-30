@@ -11,6 +11,7 @@ import crisp.util.Ui;
 
 
 public class ListCommand extends Command {
+    private String message;
     /**
      * Executes the list command.
      * Iterates through the TaskList and prints each task with its index.
@@ -21,9 +22,14 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showMessage("Here are the tasks in your list:");
+        message = "Here are the tasks in your list:\n";
         for (int i = 0; i < tasks.size(); i++) {
-            ui.showMessage((i + 1) + ". " + tasks.get(i));
+            message = message + (i + 1) + ". " + tasks.get(i) + "\n";
         }
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

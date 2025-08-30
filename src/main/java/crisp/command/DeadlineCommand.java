@@ -15,6 +15,7 @@ import crisp.util.Ui;
 public class DeadlineCommand extends Command {
     private final String description;
     private final String by;
+    private String message;
 
     /**
      * Constructs a DeadlineCommand with the given description and due date.
@@ -40,7 +41,7 @@ public class DeadlineCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new Deadline(description, by);
         tasks.add(newTask);
-        ui.showAddedTask(newTask, tasks.size());
+        message = ui.showAddedTask(newTask, tasks.size());
         storage.save(tasks);
     }
 
@@ -52,5 +53,10 @@ public class DeadlineCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

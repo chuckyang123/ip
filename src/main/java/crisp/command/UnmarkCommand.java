@@ -18,7 +18,7 @@ public class UnmarkCommand extends Command {
 
     /** The index of the task to unmark (0-based). */
     private final int index;
-
+    private String message;
     /**
      * Constructs an UnmarkCommand with the specified task index.
      *
@@ -39,7 +39,7 @@ public class UnmarkCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
         task.markUndone();
-        ui.showMarkedTask(task, false);
+        message = ui.showMarkedTask(task, false);
         storage.save(tasks);
     }
 
@@ -51,5 +51,10 @@ public class UnmarkCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

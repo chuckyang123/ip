@@ -15,7 +15,7 @@ public class MarkCommand extends Command {
 
     /** The index of the task to mark as done (0-based). */
     private final int index;
-
+    private String message;
     /**
      * Constructs a MarkCommand for the task at the specified index.
      *
@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.get(index);
         task.markDone();
-        ui.showMarkedTask(task, true);
+        message = ui.showMarkedTask(task, true);
         storage.save(tasks);
     }
 
@@ -50,5 +50,10 @@ public class MarkCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

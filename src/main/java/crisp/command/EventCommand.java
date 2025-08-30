@@ -17,7 +17,7 @@ public class EventCommand extends Command {
     private final String description;
     private final String from;
     private final String to;
-
+    private String message;
     /**
      * Constructs an EventCommand with the given description, start date, and end date.
      *
@@ -44,7 +44,7 @@ public class EventCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new Event(description, from, to);
         tasks.add(newTask);
-        ui.showAddedTask(newTask, tasks.size());
+        message = ui.showAddedTask(newTask, tasks.size());
         storage.save(tasks);
     }
 
@@ -56,5 +56,10 @@ public class EventCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

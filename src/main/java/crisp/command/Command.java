@@ -29,4 +29,7 @@ public abstract class Command {
     public boolean isExit() {
         return false;
     }
+
+    /** Returns the message to display after executing the command */
+    public abstract String getMessage();
 }

@@ -14,7 +14,7 @@ import crisp.util.Ui;
  */
 public class DeleteCommand extends Command {
     private final int index; // index of task to delete (0-based internally)
-
+    private String message;
     /**
      * Constructs a DeleteCommand with the specified task index.
      *
@@ -36,7 +36,7 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task removedTask = tasks.delete(index);
-        ui.showDeletedTask(removedTask, tasks.size());
+        message = ui.showDeletedTask(removedTask, tasks.size());
         storage.save(tasks);
     }
 
@@ -48,5 +48,10 @@ public class DeleteCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

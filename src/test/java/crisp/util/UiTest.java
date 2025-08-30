@@ -57,9 +57,8 @@ public class UiTest {
     @Test
     public void testShowAddedTask() {
         Deadline task = new Deadline("Submit report", "2025-08-25", Status.NOT_DONE);
-        ui.showAddedTask(task, 1);
+        String output = ui.showAddedTask(task, 1);
 
-        String output = outContent.toString();
         assertTrue(output.contains("Got it. I've added this task:"));
         assertTrue(output.contains("Submit report"));
         assertTrue(output.contains("Now you have 1 tasks in the list."));
@@ -68,9 +67,8 @@ public class UiTest {
     @Test
     public void testShowDeletedTask() {
         Deadline task = new Deadline("Submit report", "2025-08-25", Status.NOT_DONE);
-        ui.showDeletedTask(task, 0);
+        String output = ui.showDeletedTask(task, 0);
 
-        String output = outContent.toString();
         assertTrue(output.contains("Noted. I've removed this task:"));
         assertTrue(output.contains("Submit report"));
         assertTrue(output.contains("Now you have 0 tasks in the list."));
@@ -80,14 +78,12 @@ public class UiTest {
     public void testShowMarkedTask() {
         Deadline task = new Deadline("Submit report", "2025-08-25", Status.NOT_DONE);
 
-        ui.showMarkedTask(task, true);
-        String output = outContent.toString();
+        String output = ui.showMarkedTask(task, true);
         assertTrue(output.contains("Nice! I've marked this task as done:"));
         assertTrue(output.contains("Submit report"));
 
-        outContent.reset();
-        ui.showMarkedTask(task, false);
-        output = outContent.toString();
+
+        output = ui.showMarkedTask(task, false);
         assertTrue(output.contains("OK, I've marked this task as not done yet:"));
     }
 }

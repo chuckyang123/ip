@@ -22,16 +22,6 @@ public class Ui {
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
     }
-
-    /**
-     * Reads a line of input from the user and trims leading/trailing whitespace.
-     *
-     * @return the user input as a trimmed {@code String}
-     */
-    public String readCommand() {
-        return sc.nextLine().trim();
-    }
-
     /**
      * Displays a separator line in the console.
      */
@@ -45,10 +35,9 @@ public class Ui {
      * @param task  the task that was added
      * @param count the total number of tasks in the list after addition
      */
-    public void showAddedTask(Task task, int count) {
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + count + " tasks in the list.");
+    public String showAddedTask(Task task, int count) {
+        return (" Got it. I've added this task:\n" + "   " + task + "\n"
+                + " Now you have " + count + " tasks in the list.");
     }
 
     /**
@@ -75,10 +64,9 @@ public class Ui {
      * @param task      the task that was removed
      * @param remaining the total number of tasks remaining in the list
      */
-    public void showDeletedTask(Task task, int remaining) {
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + remaining + " tasks in the list.");
+    public String showDeletedTask(Task task, int remaining) {
+        return (" Noted. I've removed this task:\n" + "   " + task + "\n"
+                + " Now you have " + remaining + " tasks in the list.");
     }
 
     /**
@@ -87,13 +75,14 @@ public class Ui {
      * @param task   the task that was marked or unmarked
      * @param isDone {@code true} if the task is marked done, {@code false} if unmarked
      */
-    public void showMarkedTask(Task task, boolean isDone) {
+    public String showMarkedTask(Task task, boolean isDone) {
+        String notice;
         if (isDone) {
-            System.out.println(" Nice! I've marked this task as done:");
+            notice = " Nice! I've marked this task as done:\n";
         } else {
-            System.out.println(" OK, I've marked this task as not done yet:");
+            notice = " OK, I've marked this task as not done yet:\n";
         }
-        System.out.println("   " + task);
+        return (notice + "   " + task);
     }
 
     /**

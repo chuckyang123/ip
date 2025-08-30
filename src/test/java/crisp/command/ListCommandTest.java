@@ -38,15 +38,12 @@ public class ListCommandTest {
 
         ListCommand cmd = new ListCommand();
         cmd.execute(tasks, ui, storage);
-
+        String actual = cmd.getMessage();
         // Expected output
-        List<String> expected = List.of(
-                "Here are the tasks in your list:",
-                "1. [T][ ] Task 1",
-                "2. [T][ ] Task 2"
-        );
+        String expected = "Here are the tasks in your list:\n"
+                        + "1. [T][ ] Task 1\n" + "2. [T][ ] Task 2\n";
 
         // Verify that the messages match
-        assertEquals(expected, ui.messages);
+        assertEquals(expected, actual);
     }
 }
