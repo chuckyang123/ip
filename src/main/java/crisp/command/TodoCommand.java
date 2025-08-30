@@ -17,7 +17,7 @@ public class TodoCommand extends Command {
 
     /** The description of the Todo task. */
     private final String description;
-
+    private String message;
     /**
      * Constructs a TodoCommand with the specified task description.
      *
@@ -38,7 +38,7 @@ public class TodoCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new Todo(description);
         tasks.add(newTask);
-        ui.showAddedTask(newTask, tasks.size());
+        message = ui.showAddedTask(newTask, tasks.size());
         storage.save(tasks);
     }
 
@@ -50,5 +50,10 @@ public class TodoCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

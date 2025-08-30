@@ -3,9 +3,6 @@ package crisp.command;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import org.junit.jupiter.api.Test;
 
 import crisp.task.Deadline;
@@ -44,19 +41,11 @@ public class ShowCommandTest {
 
         ShowCommand cmd = new ShowCommand("2025-08-25");
 
-        // Capture System.out
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
-        System.setOut(new PrintStream(outContent));
-
         // Act
         cmd.execute(tasks, ui, storage);
 
-        // Restore System.out
-        System.setOut(originalOut);
-
         // Assert
-        String output = outContent.toString();
+        String output = cmd.getMessage();
         String normalized = output.replaceAll("\\s+", " ").trim();
         assertEquals("Tasks occurring on 8月 25 2025: [D][ ] Submit report (by: 8月 25 2025)", normalized);
 

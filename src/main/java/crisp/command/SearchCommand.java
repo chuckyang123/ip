@@ -12,7 +12,7 @@ import crisp.util.Ui;
 public class SearchCommand extends Command {
     /** The keywords to search for in task descriptions. */
     private final String[] keywords;
-
+    private String message;
     /**
      * Constructs a SearchCommand with the given keywords.
      *
@@ -37,7 +37,7 @@ public class SearchCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        System.out.println(" Here are the matching tasks in your list:");
+        message = " Here are the matching tasks in your list:\n";
 
         boolean found = false;
         int count = 1;
@@ -45,7 +45,7 @@ public class SearchCommand extends Command {
         for (Task task : tasks.getAll()) {
             for (String keyword : keywords) {
                 if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
-                    System.out.println(" " + count + ". " + task);
+                    message = message + " " + count + ". " + task + "\n";
                     found = true;
                     count++;
                     break; // Avoid printing the same task multiple times if multiple keywords match
@@ -54,7 +54,7 @@ public class SearchCommand extends Command {
         }
 
         if (!found) {
-            System.out.println(" No tasks match your search.");
+            message = message + " No tasks match your search.";
         }
     }
 
@@ -66,5 +66,10 @@ public class SearchCommand extends Command {
     @Override
     public boolean isExit() {
         return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }
