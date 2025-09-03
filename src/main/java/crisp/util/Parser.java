@@ -60,7 +60,8 @@ public class Parser {
             int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
             return new UnmarkCommand(num);
         } else if (input.startsWith("delete ")) {
-            return new DeleteCommand(Integer.parseInt(input.replaceAll("\\D+", "")) - 1);
+            int index = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
+            return new DeleteCommand(index);
         } else if (input.startsWith("show ")) {
             String dateStr = input.substring(5).trim();
             return new ShowCommand(dateStr);

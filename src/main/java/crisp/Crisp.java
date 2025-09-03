@@ -62,6 +62,10 @@ public class Crisp {
                 isExit = true;
             }
             return c.getMessage();
+        } catch (NumberFormatException e) {
+            return ("OOPS!!! Please provide a valid task number.");
+        } catch (IndexOutOfBoundsException e) {
+            return ("OOPS!!! The task number you entered does not exist.");
         } catch (Exception e) {
             return " OOPS!!! " + e.getMessage();
         }
