@@ -63,7 +63,13 @@ public class Deadline extends Task {
     public String getDescription() {
         return description;
     }
-
+    /**
+     * postpone the deadline
+     */
+    public void postponeByDays(int days) {
+        assert days > 0 : "Days to postpone must be positive";
+        this.by = this.by.plusDays(days);
+    }
     /**
      * Returns the due date of the task.
      *

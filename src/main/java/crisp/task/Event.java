@@ -99,4 +99,12 @@ public class Event extends Task {
         return type.getIcon() + " | " + (status == Status.DONE ? "1" : "0") + " | " + description
                + " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
     }
+    /**
+     * Postpone the happening date
+     */
+    public void postponeByDays(int days) {
+        assert days > 0 : "Days to postpone must be positive";
+        this.from = this.from.plusDays(days);
+        this.to = this.to.plusDays(days);
+    }
 }

@@ -9,6 +9,7 @@ import crisp.command.ListCommand;
 import crisp.command.MarkCommand;
 import crisp.command.SearchCommand;
 import crisp.command.ShowCommand;
+import crisp.command.SnoozeCommand;
 import crisp.command.TodoCommand;
 import crisp.command.UnmarkCommand;
 
@@ -84,6 +85,14 @@ public class Parser {
             return getDeadlineCommand(input);
         } else if (input.startsWith("event")) {
             return getEventCommand(input);
+        } else if (input.startsWith("snooze ")) {
+            String[] parts = input.split("\\s+");
+            if (parts.length != 3) {
+                throw new Exception("Usage: snooze <taskIndex> <days>");
+            }
+            int index = Integer.parseInt(parts[1]) - 1;
+            int days = Integer.parseInt(parts[2]);
+            return new SnoozeCommand(index, days);
         } else {
             throw new Exception("I'm sorry, but I don't know what that means :-(");
         }
