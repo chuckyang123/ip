@@ -42,11 +42,38 @@ public class EventCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        // Preconditions
+        assert tasks != null : "TaskList must not be null";
+        assert ui != null : "Ui must not be null";
+        assert storage != null : "Storage must not be null";
+        assert description != null && !description.trim().isEmpty()
+                : "Description must not be null or empty";
+        assert from != null && !from.trim().isEmpty()
+                : "Start date must not be null or empty";
+        assert to != null && !to.trim().isEmpty()
+                : "End date must not be null or empty";
+
         Task newTask = new Event(description, from, to);
+
+        // Postcondition: task created
+        assert newTask != null : "New Event task should have been created";
+
+        int oldSize = tasks.size();
         tasks.add(newTask);
+
+        // Postcondition: size should increase by 1
+        assert tasks.size() == oldSize + 1
+                : "TaskList size should increase by 1 after adding an Event";
+
         message = ui.showAddedTask(newTask, tasks.size());
+
+        // Postcondition: UI message should be valid
+        assert message != null && !message.isEmpty()
+                : "Ui.showAddedTask should return a non-empty message";
+
         storage.save(tasks);
     }
+
 
     /**
      * Indicates that this command does not exit the application.

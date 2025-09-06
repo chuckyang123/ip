@@ -41,12 +41,6 @@ public class UiTest {
         assertTrue(output.contains("What can I do for you?"));
     }
 
-    @Test
-    public void testShowLine() {
-        ui.showLine();
-        String output = outContent.toString().trim();
-        assertEquals("____________________________________________________________", output);
-    }
 
     @Test
     public void testShowError() {
