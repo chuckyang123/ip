@@ -6,7 +6,6 @@ import java.time.format.DateTimeParseException;
 
 import crisp.task.Deadline;
 import crisp.task.Event;
-import crisp.task.Task;
 import crisp.task.TaskList;
 import crisp.util.Storage;
 import crisp.util.Ui;
@@ -44,36 +43,58 @@ public class ShowCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        StringBuilder message = new StringBuilder();
+        // Preconditions
+        assert tasks != null : "TaskList must not be null";
+        assert ui != null : "Ui must not be null";
+        assert storage != null : "Storage must not be null";
+        assert dateStr != null && !dateStr.trim().isEmpty()
+                : "Date string must not be null or empty";
+
         try {
             LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            message.append("Tasks occurring on ")
-                    .append(queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")))
-                    .append(":\n");
+            assert queryDate != null : "Parsed queryDate should not be null";
 
-            boolean found = false;
-            for (Task task : tasks.getAll()) {
-                if (task instanceof Deadline dl && dl.getBy().isEqual(queryDate)) {
-                    message.append("  ").append(dl).append("\n");
-                    found = true;
-                } else if (task instanceof Event ev && !queryDate.isBefore(ev.getFrom())
-                        && !queryDate.isAfter(ev.getTo())) {
-                    message.append("  ").append(ev).append("\n");
-                    found = true;
-                }
+            String header = "Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":\n";
+
+            java.util.List<String> matchingTasks = tasks.getAll().stream()
+                    .peek(task -> {
+                        assert task != null : "Task in TaskList should not be null";
+                    })
+                    .filter(task -> {
+                        if (task instanceof Deadline dl) {
+                            assert dl.getBy() != null : "Deadline date must not be null";
+                            return dl.getBy().isEqual(queryDate);
+                        } else if (task instanceof Event ev) {
+                            assert ev.getFrom() != null : "Event start date must not be null";
+                            assert ev.getTo() != null : "Event end date must not be null";
+                            return !queryDate.isBefore(ev.getFrom()) && !queryDate.isAfter(ev.getTo());
+                        }
+                        return false;
+                    })
+                    .map(task -> "  " + task)
+                    .toList(); // Collect matching tasks as a list
+
+            if (matchingTasks.isEmpty()) {
+                this.message = header + "No tasks found on this date.\n";
+            } else {
+                this.message = header + String.join("\n", matchingTasks) + "\n";
             }
 
-            if (!found) {
-                message.append("No tasks found on this date.\n");
-            }
-
-            this.message = message.toString(); // store in a field for getMessage()
+            // Postcondition
+            assert this.message != null && !this.message.isEmpty()
+                    : "ShowCommand must produce a non-empty message";
 
         } catch (DateTimeParseException e) {
             this.message = "Invalid date format. Use yyyy-MM-dd. Example: 2019-12-02";
             ui.showError(this.message);
+
+            // Postcondition for error case
+            assert this.message.startsWith("Invalid date format")
+                    : "Error message should clearly indicate invalid date format";
         }
     }
+
+
 
 
     /**

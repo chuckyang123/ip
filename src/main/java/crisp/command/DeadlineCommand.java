@@ -39,9 +39,32 @@ public class DeadlineCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        // Preconditions: none of these should be null
+        assert tasks != null : "TaskList must not be null";
+        assert ui != null : "Ui must not be null";
+        assert storage != null : "Storage must not be null";
+        assert description != null && !description.trim().isEmpty()
+                : "Description must not be null or empty";
+        assert by != null && !by.trim().isEmpty()
+                : "Due date must not be null or empty";
+
         Task newTask = new Deadline(description, by);
+
+        // Postcondition: task should be non-null
+        assert newTask != null : "New Deadline task should have been created";
+
+        int oldSize = tasks.size();
         tasks.add(newTask);
+
+        // Postcondition: size should increase by exactly 1
+        assert tasks.size() == oldSize + 1 : "TaskList size should increase by 1 after adding task";
+
         message = ui.showAddedTask(newTask, tasks.size());
+
+        // Postcondition: message should not be null or empty
+        assert message != null && !message.isEmpty()
+                : "Ui.showAddedTask should return a non-empty message";
+
         storage.save(tasks);
     }
 
