@@ -16,17 +16,8 @@ public class Ui {
     /**
      * Displays the welcome message when the program starts.
      */
-    public void showWelcome() {
-        System.out.println("____________________________________________________________");
-        System.out.println(" Hello! I'm Crisp");
-        System.out.println(" What can I do for you?");
-        System.out.println("____________________________________________________________");
-    }
-    /**
-     * Displays a separator line in the console.
-     */
-    public void showLine() {
-        System.out.println("____________________________________________________________");
+    public String showWelcome() {
+        return (" Hello! I'm Crisp\n" + " What can I do for you?");
     }
 
     /**

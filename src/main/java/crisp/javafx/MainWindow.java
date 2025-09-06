@@ -72,7 +72,7 @@ public class MainWindow extends AnchorPane {
      * Displays the initial greeting message from Crisp in a dialog box.
      */
     private void showGreeting() {
-        String greeting = "Hello! I'm Crisp\nWhat can I do for you?";
+        String greeting = crisp.showWelcome();
         dialogContainer.getChildren().add(
                 DialogBox.getCrispDialog(greeting, crispImage)
         );

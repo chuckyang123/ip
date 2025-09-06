@@ -36,6 +36,7 @@ public class Crisp {
      * Constructs a new {@code Crisp} application.
      * Attempts to load tasks from storage; if loading fails, initializes an empty task list.
      */
+    @SuppressWarnings("checkstyle:DeclarationOrder")
     public Crisp() {
         try {
             tasks = new TaskList(storage.load());
@@ -69,5 +70,14 @@ public class Crisp {
         } catch (Exception e) {
             return " OOPS!!! " + e.getMessage();
         }
+    }
+    /**
+     * Processes a welcome command.
+     * <p>
+     * Call the ui welcome function.
+     * @return the welcome message to be displayed to the user
+     */
+    public String showWelcome() {
+        return ui.showWelcome();
     }
 }
