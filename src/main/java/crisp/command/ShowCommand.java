@@ -44,22 +44,42 @@ public class ShowCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        // Preconditions
+        assert tasks != null : "TaskList must not be null";
+        assert ui != null : "Ui must not be null";
+        assert storage != null : "Storage must not be null";
+        assert dateStr != null && !dateStr.trim().isEmpty()
+                : "Date string must not be null or empty";
+
         StringBuilder message = new StringBuilder();
         try {
-            LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate queryDate = LocalDate.parse(
+                    dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            assert queryDate != null : "Parsed queryDate should not be null";
+
             message.append("Tasks occurring on ")
                     .append(queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")))
                     .append(":\n");
 
             boolean found = false;
             for (Task task : tasks.getAll()) {
-                if (task instanceof Deadline dl && dl.getBy().isEqual(queryDate)) {
-                    message.append("  ").append(dl).append("\n");
-                    found = true;
-                } else if (task instanceof Event ev && !queryDate.isBefore(ev.getFrom())
-                        && !queryDate.isAfter(ev.getTo())) {
-                    message.append("  ").append(ev).append("\n");
-                    found = true;
+                assert task != null : "Task in TaskList should not be null";
+
+                if (task instanceof Deadline dl) {
+                    assert dl.getBy() != null : "Deadline date must not be null";
+                    if (dl.getBy().isEqual(queryDate)) {
+                        message.append("  ").append(dl).append("\n");
+                        found = true;
+                    }
+                } else if (task instanceof Event ev) {
+                    assert ev.getFrom() != null : "Event start date must not be null";
+                    assert ev.getTo() != null : "Event end date must not be null";
+                    if (!queryDate.isBefore(ev.getFrom())
+                            && !queryDate.isAfter(ev.getTo())) {
+                        message.append("  ").append(ev).append("\n");
+                        found = true;
+                    }
                 }
             }
 
@@ -67,13 +87,22 @@ public class ShowCommand extends Command {
                 message.append("No tasks found on this date.\n");
             }
 
-            this.message = message.toString(); // store in a field for getMessage()
+            this.message = message.toString();
+
+            // Postcondition
+            assert this.message != null && !this.message.isEmpty()
+                    : "ShowCommand must produce a non-empty message";
 
         } catch (DateTimeParseException e) {
             this.message = "Invalid date format. Use yyyy-MM-dd. Example: 2019-12-02";
             ui.showError(this.message);
+
+            // Postcondition for error case
+            assert this.message.startsWith("Invalid date format")
+                    : "Error message should clearly indicate invalid date format";
         }
     }
+
 
 
     /**

@@ -35,10 +35,30 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        // Preconditions
+        assert tasks != null : "TaskList must not be null";
+        assert ui != null : "Ui must not be null";
+        assert storage != null : "Storage must not be null";
+        assert index >= 0 && index < tasks.size()
+                : "Index must be within TaskList bounds";
+
+        int oldSize = tasks.size();
+
         Task removedTask = tasks.delete(index);
+
+        // Postconditions
+        assert removedTask != null : "Deleted task should not be null";
+        assert tasks.size() == oldSize - 1
+                : "TaskList size should decrease by 1 after deletion";
+
         message = ui.showDeletedTask(removedTask, tasks.size());
+
+        assert message != null && !message.isEmpty()
+                : "Ui.showDeletedTask should return a non-empty message";
+
         storage.save(tasks);
     }
+
 
     /**
      * Indicates that this command does not exit the application.

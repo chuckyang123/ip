@@ -37,18 +37,34 @@ public class SearchCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        // Preconditions
+        assert tasks != null : "TaskList must not be null";
+        assert ui != null : "Ui must not be null";
+        assert storage != null : "Storage must not be null";
+        assert keywords != null && keywords.length > 0
+                : "Keywords must not be null or empty";
+
         message = " Here are the matching tasks in your list:\n";
 
         boolean found = false;
         int count = 1;
 
         for (Task task : tasks.getAll()) {
+            // Loop invariant: every task should be non-null
+            assert task != null : "Task in TaskList should not be null";
+            assert task.getDescription() != null
+                    : "Task description should not be null";
+
             for (String keyword : keywords) {
-                if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                assert keyword != null && !keyword.trim().isEmpty()
+                        : "Keyword must not be null or empty";
+
+                if (task.getDescription().toLowerCase()
+                        .contains(keyword.toLowerCase())) {
                     message = message + " " + count + ". " + task + "\n";
                     found = true;
                     count++;
-                    break; // Avoid printing the same task multiple times if multiple keywords match
+                    break; // Ensure task is listed only once
                 }
             }
         }
@@ -56,7 +72,12 @@ public class SearchCommand extends Command {
         if (!found) {
             message = message + " No tasks match your search.";
         }
+
+        // Postcondition: message should always exist
+        assert message != null && !message.isEmpty()
+                : "SearchCommand should always produce a non-empty message";
     }
+
 
     /**
      * Returns whether this command causes the application to exit.
