@@ -19,11 +19,6 @@ public class ListCommandTest {
     static class TestUi extends Ui {
         @SuppressWarnings("checkstyle:VisibilityModifier")
         List<String> messages = new ArrayList<>();
-
-        @Override
-        public void showMessage(String message) {
-            messages.add(message);
-        }
     }
 
     @Test

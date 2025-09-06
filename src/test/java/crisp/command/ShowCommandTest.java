@@ -18,12 +18,6 @@ public class ShowCommandTest {
         boolean lineShown = false;
         @SuppressWarnings("checkstyle:VisibilityModifier")
         String errorMessage = null;
-
-        @Override
-        public void showLine() {
-            lineShown = true;
-        }
-
         @Override
         public void showError(String message) {
             errorMessage = message;

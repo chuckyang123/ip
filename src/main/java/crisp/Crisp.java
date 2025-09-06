@@ -24,14 +24,6 @@ public class Crisp {
     private TaskList tasks;
     private Ui ui = new Ui();
     private boolean isExit = false;
-
-    public boolean isExit() {
-        return isExit;
-    }
-
-    public void setExit(boolean exit) {
-        isExit = exit;
-    }
     /**
      * Constructs a new {@code Crisp} application.
      * Attempts to load tasks from storage; if loading fails, initializes an empty task list.
@@ -45,7 +37,13 @@ public class Crisp {
             tasks = new TaskList();
         }
     }
+    public boolean isExit() {
+        return isExit;
+    }
 
+    public void setExit(boolean exit) {
+        isExit = exit;
+    }
     /**
      * Processes a single user input command.
      * <p>
