@@ -29,7 +29,7 @@ public class DeadlineTest {
     @Test
     public void testToString() {
         Deadline deadline = new Deadline("Submit report", "2025-08-25");
-        String expected = "[D][ ] Submit report (by: 8月 25 2025)";
+        String expected = "[D][ ] Submit report (by: Aug 25 2025)";
         assertEquals(expected, deadline.toString());
     }
 

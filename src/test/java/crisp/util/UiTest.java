@@ -1,6 +1,5 @@
 package crisp.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
@@ -35,8 +34,7 @@ public class UiTest {
 
     @Test
     public void testShowWelcome() {
-        ui.showWelcome();
-        String output = outContent.toString();
+        String output = ui.showWelcome();
         assertTrue(output.contains("Hello! I'm Crisp"));
         assertTrue(output.contains("What can I do for you?"));
     }

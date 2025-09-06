@@ -1,7 +1,5 @@
 package crisp.util;
 
-import java.util.Scanner;
-
 import crisp.task.Task;
 
 
@@ -11,8 +9,6 @@ import crisp.task.Task;
  * for user input.
  */
 public class Ui {
-    private Scanner sc = new Scanner(System.in);
-
     /**
      * Displays the welcome message when the program starts.
      */

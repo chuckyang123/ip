@@ -30,7 +30,7 @@ public class EventTest {
     @Test
     public void testToString() {
         Event event = new Event("Conference", "2025-08-24", "2025-08-26");
-        String expected = "[E][ ] Conference (from: 8月 24 2025 to: 8月 26 2025)";
+        String expected = "[E][ ] Conference (from: Aug 24 2025 to: Aug 26 2025)";
         assertEquals(expected, event.toString());
     }
 

@@ -18,7 +18,7 @@ public class ListCommandTest {
     // Custom Ui class for testing
     static class TestUi extends Ui {
         @SuppressWarnings("checkstyle:VisibilityModifier")
-        List<String> messages = new ArrayList<>();
+        private List<String> messages = new ArrayList<>();
     }
 
     @Test

@@ -15,9 +15,9 @@ public class ShowCommandTest {
     // Custom Ui class for testing
     static class TestUi extends Ui {
         @SuppressWarnings("checkstyle:VisibilityModifier")
-        boolean lineShown = false;
+        private boolean lineShown = false;
         @SuppressWarnings("checkstyle:VisibilityModifier")
-        String errorMessage = null;
+        private String errorMessage = null;
         @Override
         public void showError(String message) {
             errorMessage = message;
@@ -41,7 +41,7 @@ public class ShowCommandTest {
         // Assert
         String output = cmd.getMessage();
         String normalized = output.replaceAll("\\s+", " ").trim();
-        assertEquals("Tasks occurring on 8月 25 2025: [D][ ] Submit report (by: 8月 25 2025)", normalized);
+        assertEquals("Tasks occurring on Aug 25 2025: [D][ ] Submit report (by: Aug 25 2025)", normalized);
 
     }
 
