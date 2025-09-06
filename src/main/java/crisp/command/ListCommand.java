@@ -1,5 +1,6 @@
 package crisp.command;
 
+import crisp.task.Task;
 import crisp.task.TaskList;
 import crisp.util.Storage;
 import crisp.util.Ui;
@@ -25,23 +26,27 @@ public class ListCommand extends Command {
         // Preconditions
         assert tasks != null : "TaskList must not be null";
         assert ui != null : "Ui must not be null";
-        // storage is unused, but we can still check it’s not null
         assert storage != null : "Storage must not be null";
-
-        message = "Here are the tasks in your list:\n";
 
         int size = tasks.size();
         assert size >= 0 : "TaskList size should never be negative";
 
-        for (int i = 0; i < size; i++) {
-            assert tasks.get(i) != null : "Task at index " + i + " should not be null";
-            message = message + (i + 1) + ". " + tasks.get(i) + "\n";
-        }
+        message = "Here are the tasks in your list:\n";
+
+        // Use IntStream to iterate over indices
+        message += java.util.stream.IntStream.range(0, size)
+                .mapToObj(i -> {
+                    Task task = tasks.get(i);
+                    assert task != null : "Task at index " + i + " should not be null";
+                    return (i + 1) + ". " + task;
+                })
+                .collect(java.util.stream.Collectors.joining("\n", "", "\n"));
 
         // Postcondition: message should not be null or empty
         assert message != null && !message.isEmpty()
                 : "ListCommand should always produce a non-empty message";
     }
+
 
 
     @Override

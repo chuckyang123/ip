@@ -6,7 +6,6 @@ import java.time.format.DateTimeParseException;
 
 import crisp.task.Deadline;
 import crisp.task.Event;
-import crisp.task.Task;
 import crisp.task.TaskList;
 import crisp.util.Storage;
 import crisp.util.Ui;
@@ -51,43 +50,35 @@ public class ShowCommand extends Command {
         assert dateStr != null && !dateStr.trim().isEmpty()
                 : "Date string must not be null or empty";
 
-        StringBuilder message = new StringBuilder();
         try {
-            LocalDate queryDate = LocalDate.parse(
-                    dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+            LocalDate queryDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             assert queryDate != null : "Parsed queryDate should not be null";
 
-            message.append("Tasks occurring on ")
-                    .append(queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")))
-                    .append(":\n");
+            String header = "Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":\n";
 
-            boolean found = false;
-            for (Task task : tasks.getAll()) {
-                assert task != null : "Task in TaskList should not be null";
+            java.util.List<String> matchingTasks = tasks.getAll().stream()
+                    .peek(task -> {
+                        assert task != null : "Task in TaskList should not be null";
+                    })
+                    .filter(task -> {
+                        if (task instanceof Deadline dl) {
+                            assert dl.getBy() != null : "Deadline date must not be null";
+                            return dl.getBy().isEqual(queryDate);
+                        } else if (task instanceof Event ev) {
+                            assert ev.getFrom() != null : "Event start date must not be null";
+                            assert ev.getTo() != null : "Event end date must not be null";
+                            return !queryDate.isBefore(ev.getFrom()) && !queryDate.isAfter(ev.getTo());
+                        }
+                        return false;
+                    })
+                    .map(task -> "  " + task)
+                    .toList(); // Collect matching tasks as a list
 
-                if (task instanceof Deadline dl) {
-                    assert dl.getBy() != null : "Deadline date must not be null";
-                    if (dl.getBy().isEqual(queryDate)) {
-                        message.append("  ").append(dl).append("\n");
-                        found = true;
-                    }
-                } else if (task instanceof Event ev) {
-                    assert ev.getFrom() != null : "Event start date must not be null";
-                    assert ev.getTo() != null : "Event end date must not be null";
-                    if (!queryDate.isBefore(ev.getFrom())
-                            && !queryDate.isAfter(ev.getTo())) {
-                        message.append("  ").append(ev).append("\n");
-                        found = true;
-                    }
-                }
+            if (matchingTasks.isEmpty()) {
+                this.message = header + "No tasks found on this date.\n";
+            } else {
+                this.message = header + String.join("\n", matchingTasks) + "\n";
             }
-
-            if (!found) {
-                message.append("No tasks found on this date.\n");
-            }
-
-            this.message = message.toString();
 
             // Postcondition
             assert this.message != null && !this.message.isEmpty()
@@ -102,6 +93,7 @@ public class ShowCommand extends Command {
                     : "Error message should clearly indicate invalid date format";
         }
     }
+
 
 
 

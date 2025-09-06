@@ -1,6 +1,5 @@
 package crisp.command;
 
-import crisp.task.Task;
 import crisp.task.TaskList;
 import crisp.util.Storage;
 import crisp.util.Ui;
@@ -41,41 +40,29 @@ public class SearchCommand extends Command {
         assert tasks != null : "TaskList must not be null";
         assert ui != null : "Ui must not be null";
         assert storage != null : "Storage must not be null";
-        assert keywords != null && keywords.length > 0
-                : "Keywords must not be null or empty";
+        assert keywords != null && keywords.length > 0 : "Keywords must not be null or empty";
 
-        message = " Here are the matching tasks in your list:\n";
+        java.util.concurrent.atomic.AtomicInteger count = new java.util.concurrent.atomic.AtomicInteger(1);
 
-        boolean found = false;
-        int count = 1;
+        // Build message with matching tasks
+        String matchedTasks = tasks.getAll().stream()
+                .peek(task -> {
+                    assert task != null : "Task in TaskList should not be null";
+                    assert task.getDescription() != null : "Task description should not be null";
+                })
+                .filter(task -> java.util.Arrays.stream(keywords)
+                        .peek(kw -> {
+                            assert kw != null && !kw.trim().isEmpty() : "Keyword must not be null or empty";
+                        })
+                    .anyMatch(kw -> task.getDescription().toLowerCase().contains(kw.toLowerCase())))
+                .map(task -> " " + count.getAndIncrement() + ". " + task)
+                .reduce("", (acc, t) -> acc + t + "\n");
 
-        for (Task task : tasks.getAll()) {
-            // Loop invariant: every task should be non-null
-            assert task != null : "Task in TaskList should not be null";
-            assert task.getDescription() != null
-                    : "Task description should not be null";
-
-            for (String keyword : keywords) {
-                assert keyword != null && !keyword.trim().isEmpty()
-                        : "Keyword must not be null or empty";
-
-                if (task.getDescription().toLowerCase()
-                        .contains(keyword.toLowerCase())) {
-                    message = message + " " + count + ". " + task + "\n";
-                    found = true;
-                    count++;
-                    break; // Ensure task is listed only once
-                }
-            }
-        }
-
-        if (!found) {
-            message = message + " No tasks match your search.";
-        }
+        message = " Here are the matching tasks in your list:\n"
+                + (matchedTasks.isEmpty() ? " No tasks match your search." : matchedTasks);
 
         // Postcondition: message should always exist
-        assert message != null && !message.isEmpty()
-                : "SearchCommand should always produce a non-empty message";
+        assert message != null && !message.isEmpty() : "SearchCommand should always produce a non-empty message";
     }
 
 
