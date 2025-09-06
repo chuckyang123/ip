@@ -46,15 +46,8 @@ public class SearchCommand extends Command {
 
         // Build message with matching tasks
         String matchedTasks = tasks.getAll().stream()
-                .peek(task -> {
-                    assert task != null : "Task in TaskList should not be null";
-                    assert task.getDescription() != null : "Task description should not be null";
-                })
                 .filter(task -> java.util.Arrays.stream(keywords)
-                        .peek(kw -> {
-                            assert kw != null && !kw.trim().isEmpty() : "Keyword must not be null or empty";
-                        })
-                    .anyMatch(kw -> task.getDescription().toLowerCase().contains(kw.toLowerCase())))
+                        .anyMatch(kw -> task.getDescription().toLowerCase().contains(kw.toLowerCase())))
                 .map(task -> " " + count.getAndIncrement() + ". " + task)
                 .reduce("", (acc, t) -> acc + t + "\n");
 

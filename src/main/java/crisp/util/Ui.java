@@ -32,15 +32,6 @@ public class Ui {
     }
 
     /**
-     * Displays a generic message to the user.
-     *
-     * @param message the message to display
-     */
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
-
-    /**
      * Displays an error message to the user.
      *
      * @param error the error message to display
@@ -74,13 +65,5 @@ public class Ui {
             notice = " OK, I've marked this task as not done yet:\n";
         }
         return (notice + "   " + task);
-    }
-
-    /**
-     * Closes the {@link Scanner} used for reading user input.
-     * Should be called when the program exits.
-     */
-    public void close() {
-        sc.close();
     }
 }

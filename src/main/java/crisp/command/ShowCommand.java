@@ -57,9 +57,6 @@ public class ShowCommand extends Command {
             String header = "Tasks occurring on " + queryDate.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ":\n";
 
             java.util.List<String> matchingTasks = tasks.getAll().stream()
-                    .peek(task -> {
-                        assert task != null : "Task in TaskList should not be null";
-                    })
                     .filter(task -> {
                         if (task instanceof Deadline dl) {
                             assert dl.getBy() != null : "Deadline date must not be null";
