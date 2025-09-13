@@ -14,8 +14,10 @@ Crisp is a **task management chatbot** that helps you organize your todos, deadl
 6. [Delete](#deleting-tasks)
 7. [Snooze](#snoozing-tasks)
 8. [Search](#searching-for-tasks)
-9. [Exit](#exiting-the-app)
-10. [GUI Overview](#gui-overview)
+9. [Show](#showing-tasks)
+10. [Exit](#exiting-the-app)
+11. [GUI Overview](#gui-overview)
+
 
 ---
 
@@ -179,6 +181,37 @@ Here are the matching tasks:
 [D][ ] submit report (by: 2025-09-20)
 
 ---
+## Showing tasks
+Use the `show` command to display all tasks scheduled for a particular date. This is useful for quickly checking what you have planned on a given day.
+
+**Syntax:**
+
+show <yyyy-MM-dd>
+
+**Example:**
+
+show 2025-09-20
+
+**Expected Outcome:**
+
+Tasks scheduled on 2025-09-20:
+
+[D][ ] submit report (by: 2025-09-20)
+
+**Notes:**
+
+- Only tasks whose **deadline (`/by`)** or **event date (`/from` or `/to`)** matches the specified date are shown.
+- If no tasks exist on that date, the app displays:
+
+No tasks scheduled on 2025-09-20.
+
+---
+
+## Exiting the App
+
+Use the `bye` command to close Crisp safely.
+
+---
 
 ## Exiting the App
 
@@ -219,5 +252,3 @@ Oops! You need to provide a description for your todo. Example: todo read book
 - For date input, follow the format: `yyyy-MM-dd`.
 
 ---
-
-**End of User Guide**
