@@ -40,10 +40,10 @@ public class MainWindow extends AnchorPane {
     private Crisp crisp;
 
     /** Image representing the user avatar in dialog boxes. */
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.jpg"));
 
     /** Image representing Crisp's avatar in dialog boxes. */
-    private Image crispImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image crispImage = new Image(this.getClass().getResourceAsStream("/images/Crisp.jpg"));
 
     /**
      * Initializes the controller.
