@@ -1,28 +1,45 @@
+/* USER message bubble */
 .label {
-    background:white;
-    -fx-background-color: background;
-    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
-    -fx-border-width: 2px;
+    -fx-background-color: #d9ffe2;                  /* light green */
+    -fx-border-color: #009e73;                      /* teal border */
+    -fx-border-width: 1.5px;
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;
-    -fx-text-fill: ladder(background, white 49%, black 50%);
+    -fx-text-fill: black;
+    -fx-padding: 8 12;
+    -fx-wrap-text: true;
 }
 
-
+/* BOT reply bubble */
 .reply-label {
+    -fx-background-color: #ffffff;                  /* white */
+    -fx-border-color: #0072b2;                      /* blue border */
+    -fx-border-width: 1.5px;
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
+    -fx-text-fill: black;
+    -fx-padding: 8 12;
+    -fx-wrap-text: true;
 }
 
-#displayPicture {
-    /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+/* ERROR bubble */
+.error-label {
+    -fx-background-color: #ffe6e6;                  /* pale red */
+    -fx-border-color: #d55e00;                      /* orange border */
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-text-fill: #a40000;                         /* dark red text */
+    -fx-font-weight: bold;
+    -fx-padding: 8 12;
+    -fx-wrap-text: true;
+}
 
-    /* Change size of image. */
+/* Profile picture */
+#displayPicture {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+    -fx-background-radius: 50%;    /* crop into circle */
     -fx-scale-x: 1;
     -fx-scale-y: 1;
-
-    /* Rotate image clockwise by degrees. */
     -fx-rotate: 0;
 }
-
