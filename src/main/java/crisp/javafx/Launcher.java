@@ -17,9 +17,11 @@ import javafx.application.Application;
 public class Launcher {
 
     /**
-     * Main method that launches the Crisp JavaFX application.
+     * The entry point of the Crisp JavaFX application.
+     * <p>
+     * This method launches the JavaFX runtime and starts the application.
      *
-     * @param args command-line arguments (not used)
+     * @param args the command-line arguments passed to the application
      */
     public static void main(String[] args) {
         Application.launch(Main.class, args);

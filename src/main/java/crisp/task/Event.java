@@ -100,7 +100,13 @@ public class Event extends Task {
                + " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
     }
     /**
-     * Postpone the happening date by the days given
+     * Postpones the event by the specified number of days.
+     * <p>
+     * Both the start ({@code from}) and end ({@code to}) dates
+     * of the event are shifted forward by the given number of days.
+     *
+     * @param days the number of days to postpone the event; must be positive
+     * @throws AssertionError if {@code days} is not positive
      */
     public void postponeByDays(int days) {
         assert days > 0 : "Days to postpone must be positive";

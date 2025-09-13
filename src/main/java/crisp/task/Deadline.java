@@ -64,7 +64,12 @@ public class Deadline extends Task {
         return description;
     }
     /**
-     * Postpone the deadline by the days given
+     * Postpones the deadline by the specified number of days.
+     * <p>
+     * The {@code by} date is shifted forward by the given number of days.
+     *
+     * @param days the number of days to postpone; must be positive
+     * @throws AssertionError if {@code days} is not positive
      */
     public void postponeByDays(int days) {
         assert days > 0 : "Days to postpone must be positive";
