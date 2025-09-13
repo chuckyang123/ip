@@ -64,7 +64,7 @@ public class Deadline extends Task {
         return description;
     }
     /**
-     * postpone the deadline
+     * Postpone the deadline by the days given
      */
     public void postponeByDays(int days) {
         assert days > 0 : "Days to postpone must be positive";

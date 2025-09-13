@@ -50,52 +50,76 @@ public class Parser {
         } else if (input.equals("list")) {
             return new ListCommand();
         } else if (input.startsWith("mark ")) {
-            int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
-            assert num >= 0 : "Task index for mark must be non-negative";
-            return new MarkCommand(num);
+            return getMarkCommand(input);
         } else if (input.startsWith("search ")) {
-            String arguments = input.substring(7).trim();
-            assert arguments != null : "Search arguments should not be null";
-            if (arguments.isEmpty()) {
-                throw new Exception("You must provide at least one keyword. Example: search book");
-            }
-            String[] keywords = arguments.split("\\s+");
-            assert keywords.length > 0 : "Search must have at least one keyword";
-            return new SearchCommand(keywords);
+            return getSearchCommand(input);
         } else if (input.startsWith("unmark ")) {
-            int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
-            assert num >= 0 : "Task index for unmark must be non-negative";
-            return new UnmarkCommand(num);
+            return getUnmarkCommand(input);
         } else if (input.startsWith("delete ")) {
-            int index = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
-            assert index >= 0 : "Task index for delete must be non-negative";
-            return new DeleteCommand(index);
+            return getDeleteCommand(input);
         } else if (input.startsWith("show ")) {
             String dateStr = input.substring(5).trim();
             assert !dateStr.isEmpty() : "Show command must have a date string";
             return new ShowCommand(dateStr);
         } else if (input.startsWith("todo")) {
-            if (input.length() <= 5 || input.substring(5).trim().isEmpty()) {
-                throw new Exception("Oops! You need to provide a description for your todo. Example: todo read book");
-            }
-            String description = input.substring(5).trim();
-            assert !description.isEmpty() : "Todo description should not be empty";
-            return new TodoCommand(description);
+            return getTodoCommand(input);
         } else if (input.startsWith("deadline")) {
             return getDeadlineCommand(input);
         } else if (input.startsWith("event")) {
             return getEventCommand(input);
         } else if (input.startsWith("snooze ")) {
-            String[] parts = input.split("\\s+");
-            if (parts.length != 3) {
-                throw new Exception("Usage: snooze <taskIndex> <days>");
-            }
-            int index = Integer.parseInt(parts[1]) - 1;
-            int days = Integer.parseInt(parts[2]);
-            return new SnoozeCommand(index, days);
+            return getSnoozeCommand(input);
         } else {
             throw new Exception("I'm sorry, but I don't know what that means :-(");
         }
+    }
+
+    private static DeleteCommand getDeleteCommand(String input) {
+        int index = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
+        assert index >= 0 : "Task index for delete must be non-negative";
+        return new DeleteCommand(index);
+    }
+
+    private static UnmarkCommand getUnmarkCommand(String input) {
+        int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
+        assert num >= 0 : "Task index for unmark must be non-negative";
+        return new UnmarkCommand(num);
+    }
+
+    private static MarkCommand getMarkCommand(String input) {
+        int num = Integer.parseInt(input.replaceAll("\\D+", "")) - 1;
+        assert num >= 0 : "Task index for mark must be non-negative";
+        return new MarkCommand(num);
+    }
+
+    private static SnoozeCommand getSnoozeCommand(String input) throws Exception {
+        String[] parts = input.split("\\s+");
+        if (parts.length != 3) {
+            throw new Exception("Usage: snooze <taskIndex> <days>");
+        }
+        int index = Integer.parseInt(parts[1]) - 1;
+        int days = Integer.parseInt(parts[2]);
+        return new SnoozeCommand(index, days);
+    }
+
+    private static SearchCommand getSearchCommand(String input) throws Exception {
+        String arguments = input.substring(7).trim();
+        assert arguments != null : "Search arguments should not be null";
+        if (arguments.isEmpty()) {
+            throw new Exception("You must provide at least one keyword. Example: search book");
+        }
+        String[] keywords = arguments.split("\\s+");
+        assert keywords.length > 0 : "Search must have at least one keyword";
+        return new SearchCommand(keywords);
+    }
+
+    private static TodoCommand getTodoCommand(String input) throws Exception {
+        if (input.length() <= 5 || input.substring(5).trim().isEmpty()) {
+            throw new Exception("Oops! You need to provide a description for your todo. Example: todo read book");
+        }
+        String description = input.substring(5).trim();
+        assert !description.isEmpty() : "Todo description should not be empty";
+        return new TodoCommand(description);
     }
 
 
